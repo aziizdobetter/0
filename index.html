@@ -1489,52 +1489,63 @@
       ];
       const planets = [];
 
-      // Create more planets (increased from 5 to 12)
-      for (let i = 0; i < 10; i++) {
-        const planet = document.createElement("div");
-        planet.classList.add("planet");
+// Create planets with responsive count
+function createPlanets() {
+  // Clear existing planets
+  planets.length = 0;
+  const existingPlanets = spaceContainer.querySelectorAll('.planet');
+  existingPlanets.forEach(planet => planet.remove());
+  
+  // Determine number of planets based on screen width
+  const isMobile = window.innerWidth <= 768;
+  const planetCount = isMobile ? 5 : 10; // Reduced from 10 to 5 on mobile
+  
+  for (let i = 0; i < planetCount; i++) {
+    const planet = document.createElement("div");
+    planet.classList.add("planet");
 
-        // Vary planet sizes more for visual interest
-        const size = Math.random() * 80 + 20;
+    // Vary planet sizes more for visual interest
+    const size = Math.random() * 80 + 20;
 
-        planet.style.width = `${size}px`;
-        planet.style.height = `${size}px`;
-        planet.style.backgroundColor =
-          colors[Math.floor(Math.random() * colors.length)];
+    planet.style.width = `${size}px`;
+    planet.style.height = `${size}px`;
+    planet.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-        // Add some planets with radial gradients for more realistic appearance
-        if (Math.random() > 0.5) {
-          const color1 = colors[Math.floor(Math.random() * colors.length)];
-          const color2 = colors[Math.floor(Math.random() * colors.length)];
-          planet.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
-        }
+    // Add some planets with radial gradients for more realistic appearance
+    if (Math.random() > 0.5) {
+      const color1 = colors[Math.floor(Math.random() * colors.length)];
+      const color2 = colors[Math.floor(Math.random() * colors.length)];
+      planet.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
+    }
 
-        // Random starting position within screen bounds
-        const startX = Math.random() * (window.innerWidth - size);
-        const startY = Math.random() * (window.innerHeight - size);
+    // Random starting position within screen bounds
+    const startX = Math.random() * (window.innerWidth - size);
+    const startY = Math.random() * (window.innerHeight - size);
 
-        planet.style.left = `${startX}px`;
-        planet.style.top = `${startY}px`;
+    planet.style.left = `${startX}px`;
+    planet.style.top = `${startY}px`;
 
-        // Add subtle rotation animation to some planets
-        if (Math.random() > 0.7) {
-          planet.style.animation = `rotatePlanet ${
-            Math.random() * 20 + 10
-          }s linear infinite`;
-        }
+    // Add subtle rotation animation to some planets
+    if (Math.random() > 0.7) {
+      planet.style.animation = `rotatePlanet ${Math.random() * 20 + 10}s linear infinite`;
+    }
 
-        spaceContainer.appendChild(planet);
+    spaceContainer.appendChild(planet);
 
-        // Store planet data for animation
-        planets.push({
-          element: planet,
-          x: startX,
-          y: startY,
-          size: size,
-          vx: (Math.random() * 2 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Horizontal velocity
-          vy: (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Vertical velocity
-        });
-      }
+    // Store planet data for animation
+    planets.push({
+      element: planet,
+      x: startX,
+      y: startY,
+      size: size,
+      vx: (Math.random() * 2 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Horizontal velocity
+      vy: (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Vertical velocity
+    });
+  }
+}
+
+// Initial planet creation
+createPlanets();
 
       // Add CSS for planet rotation
       const style = document.createElement("style");
@@ -1889,5 +1900,6 @@
     </script>
   </body>
 </html>
+
 
 
