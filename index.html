@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio of Muhammad Abdul Aziiz" />
+    <meta property="og:title" content="Aziiz - Portfolio" />
+    <meta
+      property="og:description"
+      content="Portfolio of Muhammad Abdul Aziiz"
+    />
+    <meta property="og:url" content="https://aziizdobetter.github.io/0/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/avatar_icon.png"
+    />
+    <meta property="og:image:width" content="250" />
+    <meta property="og:image:height" content="250" />
+    <link
+      rel="icon"
+      href="https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/avatar_icon.png"
+    />
+    <title>Aziiz - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Fira Code", Arial;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: #0a0a2a;
+        color: #ffffff;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Navigation Bar Styles */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 40, 0.7);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(110, 250, 253, 0.3);
+        z-index: 1000;
+        padding: 15px 0;
+        transition: all 0.3s ease;
+      }
+
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .navbar-logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #6efafd;
+        text-decoration: none;
+        text-shadow: 0 0 10px rgba(110, 250, 253, 0.7);
+      }
+
+      .navbar-menu {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+      }
+
+      .navbar-item {
+        position: relative;
+      }
+
+      .navbar-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+
+      .navbar-link:hover {
+        color: #6efafd;
+        text-shadow: 0 0 10px rgba(110, 250, 253, 0.7);
+        background: rgba(110, 250, 253, 0.1);
+      }
+
+      .navbar-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .navbar-toggle span {
+        width: 25px;
+        height: 3px;
+        background: #6efafd;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+      /* Active section highlighting */
+      .navbar-link.active {
+        color: #ffcc00;
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+      }
+
+      /* Background Animation */
+      .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .star {
+        position: absolute;
+        background-color: #fff;
+        border-radius: 50%;
+        animation: twinkle 5s infinite;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .data-connection {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.1;
+      }
+
+      .connection-line {
+        position: absolute;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #00ffff,
+          transparent
+        );
+        height: 3px;
+        animation: dataFlow 10s linear infinite;
+      }
+
+      @keyframes dataFlow {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100vw);
+        }
+      }
+
+      /* Graph Line Animation */
+      .graph-lines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.2;
+      }
+
+      .graph-line {
+        position: absolute;
+        background: transparent;
+        border-top: 5px solid rgba(110, 250, 253, 0.5);
+        height: 1px;
+        width: 100%;
+        animation: graphFlow 15s linear infinite;
+      }
+
+      @keyframes graphFlow {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      /* Math Formula Animations */
+      .math-formulas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .math-formula {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.5rem;
+        font-family: "Times New Roman", serif;
+        text-align: center;
+        opacity: 0;
+        animation: formulaFade 8s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .math-formula svg {
+        filter: drop-shadow(0 0 5px rgba(110, 250, 253, 0.7));
+      }
+
+      @keyframes formulaFade {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        20%,
+        80% {
+          opacity: 0.9;
+          transform: scale(1);
+        }
+      }
+
+      /* Section Styles */
+      section {
+        padding: 80px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #6efafd;
+        text-shadow: 0 0 10px rgba(110, 250, 253, 0.7);
+      }
+
+      /* IMPROVED Header Section */
+      #header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        gap: 100px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .avatar-container {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #6efafd;
+        box-shadow: 0 0 20px rgba(110, 250, 253, 0.5);
+        flex-shrink: 0;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .avatar {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-color: #1a1a4a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6efafd;
+        font-size: 4rem;
+        transition: all 0.5s ease;
+      }
+
+      .avatar-default {
+        background-image: url("https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/avatar_compressed.jpg");
+      }
+
+      .avatar-hover {
+        background-image: url("https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/avatar2_compressed.jpg");
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 1s ease;
+      }
+
+      /* Hover effect for avatar */
+      .avatar-container:hover .avatar-default {
+        opacity: 1;
+      }
+
+      .avatar-container:hover .avatar-hover {
+        opacity: 1;
+      }
+
+      .avatar-container:hover {
+        transform: scale(1.1);
+      }
+
+      .intro-text {
+        max-width: 800px;
+        font-size: 1.2rem;
+        line-height: 1.7;
+        color: #e6e6ff;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+      }
+
+      .intro-text h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #6efafd;
+        text-shadow: 0 0 15px rgba(110, 250, 253, 0.7);
+        line-height: 1.2;
+      }
+
+      .greeting {
+        font-size: 2.5rem;
+        color: #ffcc00;
+        margin-bottom: 10px;
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        font-weight: 600;
+      }
+
+      .intro-text p {
+        font-size: 1.2rem;
+        margin-bottom: 25px;
+        background: rgba(26, 26, 74, 0.7);
+        backdrop-filter: blur(10px);
+        padding: 20px 30px;
+        border-radius: 10px;
+        position: relative;
+        /* border-left: 3px solid #6efafd; */
+      }
+
+      /* Sudut kanan atas dan kiri bawah */
+      .intro-text p::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        border-top: 3px solid #6efafd;
+        border-right: 3px solid #6efafd;
+      }
+
+      .intro-text p::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        border-bottom: 3px solid #6efafd;
+        border-left: 3px solid #6efafd;
+      }
+
+      /* Tambahan: sudut kiri atas dan kanan bawah */
+      .intro-text p span.corner {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+      }
+
+      .intro-text p .corner.top-left {
+        top: 0;
+        left: 0;
+        border-top: 3px solid #6efafd;
+        border-left: 3px solid #6efafd;
+      }
+
+      .intro-text p .corner.bottom-right {
+        bottom: 0;
+        right: 0;
+        border-bottom: 3px solid #6efafd;
+        border-right: 3px solid #6efafd;
+      }
+
+      .highlight {
+        color: #ffcc00;
+        font-weight: 600;
+      }
+
+      /* What I Do Section */
+      #what-i-do {
+        background: rgba(10, 15, 40, 0.7);
+      }
+
+      .services {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        max-width: 1200px;
+      }
+
+      .service {
+        flex: 1;
+        min-width: 300px;
+        padding: 30px;
+        background: rgba(26, 26, 74, 0.5);
+        border-radius: 10px;
+        border: 1px solid #6efafd;
+        box-shadow: 0 0 15px rgba(110, 250, 253, 0.3);
+      }
+
+      .service h3 {
+        color: #ff6ec7;
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+      }
+
+      /* Skills Section */
+      .skills-container {
+        padding: 20px;
+        border: 1px solid #6efafd;
+        border-radius: 10px;
+        background: rgba(26, 26, 74, 0.7);
+        backdrop-filter: blur(10px);
+        max-width: 800px;
+        width: 100%;
+      }
+
+      .skill-category {
+        margin-bottom: 30px;
+      }
+
+      .skill-category h3 {
+        color: #ffcc00;
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+      }
+
+      .skill {
+        margin-bottom: 15px;
+      }
+
+      .skill-name {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+
+      .progress-bar {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .progress {
+        height: 100%;
+        border-radius: 5px;
+        transition: width 1.5s ease-in-out;
+        width: 0%; /* Start at 0% */
+      }
+
+      .frontend .progress {
+        background: linear-gradient(to right, #ff6ec7, #6efafd);
+      }
+
+      .backend .progress {
+        background: linear-gradient(to right, #ffcc00, #ff6ec7);
+      }
+
+      .programming .progress {
+        background: linear-gradient(to right, #6efafd, #ffcc00);
+      }
+
+      /* Education Section */
+      #education {
+        background: rgba(10, 15, 40, 0.7);
+      }
+
+      .timeline {
+        max-width: 800px;
+        position: relative;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 100%;
+        background: #6efafd;
+      }
+
+      .timeline-item {
+        margin-bottom: 40px;
+        position: relative;
+        width: 50%;
+        padding: 20px;
+      }
+
+      .timeline-item:nth-child(odd) {
+        left: 0;
+      }
+
+      .timeline-item:nth-child(even) {
+        left: 50%;
+      }
+
+      .timeline-content {
+        background: rgba(26, 26, 74, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #6efafd;
+        box-shadow: 0 0 10px rgba(110, 250, 253, 0.3);
+      }
+
+      .timeline-content h3 {
+        color: #ffcc00;
+        margin-bottom: 10px;
+      }
+
+      .timeline-content .date {
+        color: #ff6ec7;
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      .project {
+        background: rgba(26, 26, 74, 0.7);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #6efafd;
+        box-shadow: 0 0 15px rgba(110, 250, 253, 0.3);
+        transition: transform 0.3s ease;
+      }
+
+      .project a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .project:hover {
+        cursor: pointer;
+        transform: translateY(-10px);
+      }
+
+      .project-img {
+        height: 200px;
+        background: #1a1a4a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6efafd;
+        font-size: 3rem;
+      }
+
+      .project-img img {
+        height: 100px;
+      }
+
+      .project-info {
+        padding: 20px;
+      }
+
+      .project-info h3 {
+        color: #ffcc00;
+        margin-bottom: 10px;
+      }
+
+      /* Achievements Section */
+      #achievements {
+        background: rgba(10, 15, 40, 0.7);
+      }
+
+      .achievements-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        max-width: 1200px;
+      }
+
+      .achievement {
+        flex: 1;
+        min-width: 250px;
+        padding: 20px;
+        background: rgba(26, 26, 74, 0.7);
+        border-radius: 10px;
+        border: 1px solid #ffcc00;
+        box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .achievement:hover {
+        transform: translateY(-5px);
+      }
+
+      .achievement img {
+        max-width: 100%;
+        height: 200px;
+        object-fit: contain;
+        margin-bottom: 15px;
+        border-radius: 5px;
+      }
+
+      .achievement h3 {
+        margin-bottom: 15px;
+        color: #ffcc00;
+      }
+
+      .achievement-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        color: #ff6ec7;
+      }
+
+      /* Contact Section */
+      .contact-container {
+        padding: 20px;
+        background: rgba(26, 26, 74, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid #ff6ec7;
+        border-radius: 10px;
+        max-width: 600px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 40px;
+        width: 100%;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #6efafd;
+      }
+
+      .contact-icon {
+        font-size: 1.5rem;
+        color: #ff6ec7;
+      }
+
+      .contact-form {
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        background: rgba(26, 26, 74, 0.7);
+        border: 1px solid #6efafd;
+        border-radius: 5px;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .form-group textarea {
+        height: 150px;
+        resize: vertical;
+      }
+
+      .submit-btn {
+        background: linear-gradient(to right, #ff6ec7, #6efafd);
+        color: #0a0a2a;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .submit-btn:hover {
+        transform: scale(1.05);
+      }
+
+      /* Space Elements */
+      .space-elements {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .spaceship {
+        opacity: 0%;
+        position: absolute;
+        width: 80px;
+        height: 40px;
+        background: linear-gradient(to right, #6efafd, #ff6ec7);
+        border-radius: 50% 20% 20% 50%;
+        animation: float 20s infinite linear;
+        box-shadow: 0 0 15px rgba(110, 250, 253, 0.7);
+      }
+
+      .spaceship::before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: -10px;
+        width: 20px;
+        height: 20px;
+        background: #ffcc00;
+        border-radius: 50%;
+      }
+
+      .planet {
+        position: absolute;
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        transition: transform 0.1s linear;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+          transform: translate(calc(100vw - 100px), calc(50vh - 50px))
+            rotate(90deg);
+        }
+        50% {
+          transform: translate(calc(100vw - 100px), calc(100vh - 100px))
+            rotate(180deg);
+        }
+        75% {
+          transform: translate(0, calc(100vh - 100px)) rotate(270deg);
+        }
+        100% {
+          transform: translate(0, 0) rotate(360deg);
+        }
+      }
+
+      /* Certificate Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: rgba(26, 26, 74, 0.95);
+        border-radius: 10px;
+        border: 2px solid #6efafd;
+        box-shadow: 0 0 30px rgba(110, 250, 253, 0.5);
+        width: 90%;
+        max-width: 900px;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .modal-header {
+        padding: 15px 20px;
+        background: rgba(10, 10, 40, 0.9);
+        border-bottom: 1px solid #6efafd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-title {
+        color: #ffcc00;
+        font-size: 1.5rem;
+        margin: 0;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: #6efafd;
+        font-size: 2rem;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.3s ease;
+      }
+
+      .close-btn:hover {
+        color: #ff6ec7;
+      }
+
+      .modal-body {
+        flex: 1;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .certificate-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .navbar {
+          background: rgba(10, 10, 40, 0.7);
+        }
+
+        .navbar-menu {
+          position: fixed;
+          left: -100%;
+          top: 60px;
+          flex-direction: column;
+          background: rgba(10, 10, 40, 0.7);
+          width: 100%;
+          text-align: center;
+          transition: 0.3s;
+          box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+          padding: 20px 0;
+          gap: 0;
+        }
+
+        .navbar-menu.active {
+          left: 0;
+        }
+
+        .navbar-item {
+          margin: 15px 0;
+        }
+
+        .navbar-toggle {
+          display: flex;
+        }
+
+        .navbar-toggle.active span:nth-child(1) {
+          transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .navbar-toggle.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .navbar-toggle.active span:nth-child(3) {
+          transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .avatar-container {
+          width: 200px;
+          height: 200px;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .intro-text h1 {
+          font-size: 1.7rem;
+        }
+
+        .intro-text p {
+          font-size: 1rem;
+        }
+
+        .greeting {
+          font-size: 1.7rem;
+        }
+
+        .timeline::before {
+          left: 20px;
+        }
+
+        .timeline-item {
+          width: 100%;
+          left: 0 !important;
+          padding-left: 50px;
+        }
+
+        .services,
+        .achievements-container {
+          flex-direction: column;
+        }
+
+        .math-formula {
+          font-size: 1rem;
+        }
+
+        /* Responsive layout for header */
+        #header {
+          flex-direction: column;
+          text-align: center;
+          margin-top: 70px;
+          gap: 30px;
+        }
+
+        /* Responsive modal */
+        .modal-content {
+          width: 95%;
+          height: 70%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="https://aziizdobetter.github.io/0/" class="navbar-logo"
+          >Aziiz</a
+        >
+        <ul class="navbar-menu">
+          <li class="navbar-item">
+            <a href="#header" class="navbar-link active">Home</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#what-i-do" class="navbar-link">Focus</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#skills" class="navbar-link">Skills</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#education" class="navbar-link">Education</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#projects" class="navbar-link">Projects</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#achievements" class="navbar-link">Certificate</a>
+          </li>
+          <li class="navbar-item">
+            <a href="#contact" class="navbar-link">Contact</a>
+          </li>
+        </ul>
+        <div class="navbar-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Certificate Modal -->
+    <div class="modal" id="certificateModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">Certificate</h3>
+          <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <iframe
+            class="certificate-iframe"
+            id="certificateIframe"
+            src=""
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="stars" id="stars"></div>
+    <div class="data-connection" id="data-connection"></div>
+    <div class="graph-lines" id="graph-lines"></div>
+    <div class="space-elements" id="space-elements"></div>
+    <div class="math-formulas" id="math-formulas"></div>
+
+    <!-- IMPROVED Header Section -->
+    <section id="header">
+      <div class="avatar-container">
+        <div class="avatar avatar-default"></div>
+        <div class="avatar avatar-hover"></div>
+      </div>
+      <div class="intro-text">
+        <div class="greeting">Hello, Saya</div>
+        <h1>Muhammad Abdul Aziiz</h1>
+        <p>
+          Saya adalah
+          <span class="highlight">Software Developer</span> yang memiliki
+          passion tinggi dalam membangun aplikasi web dan mobile dengan keahlian
+          pada <span class="highlight">HTML, CSS, dan JavaScript</span>, serta
+          berpengalaman menggunakan <span class="highlight">Flutter</span> untuk
+          pengembangan aplikasi mobile. Terbiasa memanfaatkan
+          <span class="highlight">Firebase, Supabase, dan MySQL</span> sebagai
+          solusi backend dan basis data. Selain itu, juga mahir menggunakan
+          <span class="highlight">Figma dan Canva</span> untuk merancang
+          tampilan antarmuka yang menarik dan user-friendly.
+          <span class="corner top-left"></span>
+          <span class="corner bottom-right"></span>
+        </p>
+      </div>
+    </section>
+
+    <!-- Rest of the HTML remains the same -->
+    <!-- What I Do Section -->
+    <section id="what-i-do">
+      <h2 class="section-title">Focus</h2>
+      <div class="services">
+        <div class="service">
+          <h3>Frontend Development</h3>
+          <p>
+            Creating responsive and interactive user interfaces using html, css,
+            and vanilla JavaScript. I focus on performance, accessibility, and
+            user experience.
+          </p>
+        </div>
+        <div class="service">
+          <h3>Backend Development</h3>
+          <p>
+            Building robust server-side applications with MySQL, Firebase and
+            Supabase. I design APIs, manage data, and ensure security and
+            scalability for web and mobile applications.
+          </p>
+        </div>
+        <div class="service">
+          <h3>UI/UX Design</h3>
+          <p>
+            Designing intuitive and visually appealing interfaces that enhance
+            user engagement. I use tools like Figma and Canva wireframes and
+            prototypes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2 class="section-title">My Skills</h2>
+      <div class="skills-container">
+        <div class="skill-category">
+          <h3>Frontend/Design</h3>
+          <div class="skill frontend">
+            <div class="skill-name">
+              <span>HTML</span>
+              <span>90%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="90"></div>
+            </div>
+          </div>
+          <div class="skill frontend">
+            <div class="skill-name">
+              <span>CSS</span>
+              <span>90%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="90"></div>
+            </div>
+          </div>
+          <div class="skill frontend">
+            <div class="skill-name">
+              <span>Javascript</span>
+              <span>85%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="85"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Backend</h3>
+          <div class="skill backend">
+            <div class="skill-name">
+              <span>MySQL</span>
+              <span>88%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="88"></div>
+            </div>
+          </div>
+          <div class="skill backend">
+            <div class="skill-name">
+              <span>Firebase</span>
+              <span>82%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="82"></div>
+            </div>
+          </div>
+          <div class="skill backend">
+            <div class="skill-name">
+              <span>Supabase</span>
+              <span>86%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="86"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Programming</h3>
+          <div class="skill programming">
+            <div class="skill-name">
+              <span>Problem Solving</span>
+              <span>90%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="90"></div>
+            </div>
+          </div>
+          <div class="skill programming">
+            <div class="skill-name">
+              <span>Algorithms</span>
+              <span>85%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="85"></div>
+            </div>
+          </div>
+          <div class="skill programming">
+            <div class="skill-name">
+              <span>Data Structures</span>
+              <span>83%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-width="83"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+      <h2 class="section-title">Education</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Software Engineering</h3>
+            <div class="date">2021 - 2024</div>
+            <p>
+              SMK Negeri 1 Pasuruan - Specialized in Web and Mobile App
+              Development. Graduated with honors.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Informatics Engineering</h3>
+            <div class="date">2024 - Now</div>
+            <p>
+              Universitas Islam Negeri Maulana Malik Ibrahim Malang - Focused on
+              web development, software architecture, and database systems.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2 class="section-title">My Projects</h2>
+      <div class="projects-grid">
+        <div class="project">
+          <div class="project-img">
+            <img
+              src="https://raw.githubusercontent.com/aziizdobetter/gunting-batu-kertas/refs/heads/main/icons/picarus.png"
+              alt="Picarus"
+            />
+          </div>
+          <div class="project-info">
+            <h3>Picarus</h3>
+            <p>
+              Aplikasi galeri foto dengan fitur autentikasi pengguna, pembuatan
+              album, unggah dan edit foto, sistem like dan komentar, serta UI
+              responsif menggunakan Flutter. Proyek ini dilengkapi dengan
+              backend PHP untuk mengelola data pengguna, album, foto, dan
+              interaksi sosial, serta mendukung akses tamu dengan fungsionalitas
+              terbatas untuk eksplorasi platform.
+            </p>
+          </div>
+        </div>
+        <div class="project">
+          <a href="https://aziizdobetter.github.io/gunting-batu-kertas/">
+            <div class="project-img">
+              <img
+                src="https://aziizdobetter.github.io/gunting-batu-kertas/icons/kertas.png"
+                alt="Gunting Batu Kertas"
+              />
+            </div>
+            <div class="project-info">
+              <h3>Gunting Batu Kertas</h3>
+              <p>
+                Aplikasi game Gunting Batu Kertas multiplayer berbasis web
+                dengan integrasi Firebase Realtime Database untuk sinkronisasi
+                state permainan secara real-time, mendukung fitur pembuatan dan
+                join room dengan ID unik, serta menerapkan mekanisme turn-based
+                gameplay dengan sistem scoring yang terintegrasi untuk kedua
+                pemain.
+              </p>
+            </div>
+          </a>
+        </div>
+        <div class="project">
+          <div class="project-img">
+            <img
+              src="https://raw.githubusercontent.com/nulief-ai/nulief-ai/refs/heads/main/app_icon_foreground_white.png"
+              alt="Nulief"
+            />
+          </div>
+          <div class="project-info">
+            <h3>Nulief AI</h3>
+            <p>
+              Aplikasi sebagai panduan emosional pribadi dengan fitur chat
+              berbasis AI, manajemen memori pengguna, dan sinkronisasi data
+              real-time. Proyek ini mengintegrasikan autentikasi multi-provider,
+              database lokal Isar, cloud Supabase, dan layanan Gemini AI untuk
+              memberikan pengalaman konseling digital yang responsif dan
+              terpersonalisasi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+      <h2 class="section-title">Certificate</h2>
+      <div class="achievements-container">
+        <div
+          class="achievement"
+          data-certificate="https://drive.google.com/file/d/1f9bWJo6rARdkOmePrjqFv6aPDeUdwcvR/preview"
+          data-title="Sertifikat Partisipasi Workshop Nasional Madig Competition"
+        >
+          <div class="achievement-icon">
+            <img
+              src="https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/certificate.jpg"
+              alt=""
+            />
+          </div>
+          <h3>Sertifikat Partisipasi Workshop Nasional Madig Competition</h3>
+          <p>
+            Diberikan karena telah mengikuti Workshop Nasional yang
+            diselenggarakan oleh Politeknik Ubaya dan Maspion IT dengan tema
+            BUILD A GOOD DIGITAL MAGAZINE DESIGN secara daring (online) pada
+            tanggal 30 November 2023.
+          </p>
+        </div>
+        <div
+          class="achievement"
+          data-certificate="https://drive.google.com/file/d/1yto7dqPJIAdzIbIOP86gMloh47e0IyUC/preview"
+          data-title="Sertifikat Praktik Kerja Lapangan (PKL) di PT Universal Big Data (UBIG)"
+        >
+          <div class="achievement-icon">
+            <img
+              src="https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/certificate2.jpg"
+              alt=""
+            />
+          </div>
+          <h3>
+            Sertifikat Praktik Kerja Lapangan (PKL) di PT Universal Big Data
+            (UBIG)
+          </h3>
+          <p>
+            Diberikan karena telah melaksanakan Praktik Kerja Lapangan (PKL)
+            mulai tanggal 3 Oktober 2022 sampai dengan tanggal 31 Maret 2023
+            dengan hasil BAIK.
+          </p>
+        </div>
+        <div
+          class="achievement"
+          data-certificate="https://drive.google.com/file/d/1RaLnGcD4kY99qk-PBkht_Z8F-lYjrtFv/preview"
+          data-title="Sertifikat Kompetensi Industri oleh RiGenKI"
+        >
+          <div class="achievement-icon">
+            <img
+              src="https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/certificate3.jpg"
+              alt=""
+            />
+          </div>
+          <h3>Sertifikat Kompetensi Industri oleh RiGenKI</h3>
+          <p>
+            Diberikan karena dinyatakan LULUS Uji Kompetensi Keahlian (UKK)
+            dengan predikat KOMPETEN dan diakui memiliki kompetensi yang
+            tercantum di balik sertifikat.
+          </p>
+        </div>
+        <div
+          class="achievement"
+          data-certificate="https://drive.google.com/file/d/1TBDk5bpB3yb75VqBOzjKe3O1ahQng83C/preview"
+          data-title="Sertifikat Kompetensi Kelulusan (Dicoding)"
+        >
+          <div class="achievement-icon">
+            <img
+              src="https://raw.githubusercontent.com/aziizdobetter/0/refs/heads/main/certificate4.jpg"
+              alt=""
+            />
+          </div>
+          <h3>Sertifikat Kompetensi Kelulusan (Dicoding)</h3>
+          <p>
+            Diberikan karena lulus pada kelas Memulai Pemrograman Dengan Kotlin.
+            Sertifikat ini dikeluarkan oleh Dicoding Indonesia dan
+            ditandatangani oleh Chief Executive Officer, Narendra Wicaksono,
+            pada tanggal 04 Juli 2023.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2 class="section-title">Contact Me</h2>
+      <div class="contact-container">
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <span>azbadkhan@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📱</span>
+            <span>+62 895-4228-71776</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Malang, Jawa Timur</span>
+          </div>
+        </div>
+        <form class="contact-form">
+          <div class="form-group">
+            <input type="text" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Your Email" required />
+          </div>
+          <div class="form-group">
+            <textarea placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <script>
+      // Create stars background
+      const starsContainer = document.getElementById("stars");
+      for (let i = 0; i < 200; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        star.style.width = `${Math.random() * 3}px`;
+        star.style.height = star.style.width;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        starsContainer.appendChild(star);
+      }
+
+      // Create data connection lines
+      const dataContainer = document.getElementById("data-connection");
+      for (let i = 0; i < 20; i++) {
+        const line = document.createElement("div");
+        line.classList.add("connection-line");
+        line.style.top = `${Math.random() * 100}vh`;
+        line.style.width = `${Math.random() * 100 + 50}px`;
+        line.style.animationDelay = `${Math.random() * 10}s`;
+        dataContainer.appendChild(line);
+      }
+
+      // Create graph lines with random up/down movement
+      const graphContainer = document.getElementById("graph-lines");
+      for (let i = 0; i < 100; i++) {
+        const graphLine = document.createElement("div");
+        graphLine.classList.add("graph-line");
+
+        // Create random path for the graph line using SVG
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        svg.style.position = "absolute";
+        svg.style.top = "0";
+        svg.style.left = "0";
+
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute("stroke", "rgba(110, 250, 253, 0.5)");
+        path.setAttribute("stroke-width", "1");
+        path.setAttribute("fill", "none");
+
+        // Generate random path data
+        let pathData = "M 0 " + Math.random() * 100 + "%";
+        const segments = 20;
+        const segmentWidth = 100 / segments;
+
+        for (let j = 1; j <= segments; j++) {
+          const x = j * segmentWidth;
+          const y = Math.random() * 100;
+          pathData += " L " + x + "% " + y + "%";
+        }
+
+        path.setAttribute("d", pathData);
+        svg.appendChild(path);
+
+        // Set random animation properties
+        graphLine.style.animationDelay = `${Math.random() * 15}s`;
+        graphLine.style.animationDuration = `${Math.random() * 10 + 10}s`;
+
+        graphLine.appendChild(svg);
+        graphContainer.appendChild(graphLine);
+      }
+
+      // Create space elements (spaceship and planets)
+      const spaceContainer = document.getElementById("space-elements");
+
+      // Create spaceship
+      const spaceship = document.createElement("div");
+      spaceship.classList.add("spaceship");
+      spaceship.style.top = "20%";
+      spaceship.style.left = "10%";
+      spaceContainer.appendChild(spaceship);
+
+      // Create planets with JavaScript-based bouncing animation
+      const colors = [
+        "#ff6ec7",
+        "#6efafd",
+        "#ffcc00",
+        "#9d4edd",
+        "#ff9e00",
+        "#00ffaa",
+        "#ff4d6d",
+        "#7209b7",
+      ];
+      const planets = [];
+
+      // Create more planets (increased from 5 to 12)
+      for (let i = 0; i < 10; i++) {
+        const planet = document.createElement("div");
+        planet.classList.add("planet");
+
+        // Vary planet sizes more for visual interest
+        const size = Math.random() * 80 + 20;
+
+        planet.style.width = `${size}px`;
+        planet.style.height = `${size}px`;
+        planet.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        // Add some planets with radial gradients for more realistic appearance
+        if (Math.random() > 0.5) {
+          const color1 = colors[Math.floor(Math.random() * colors.length)];
+          const color2 = colors[Math.floor(Math.random() * colors.length)];
+          planet.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
+        }
+
+        // Random starting position within screen bounds
+        const startX = Math.random() * (window.innerWidth - size);
+        const startY = Math.random() * (window.innerHeight - size);
+
+        planet.style.left = `${startX}px`;
+        planet.style.top = `${startY}px`;
+
+        // Add subtle rotation animation to some planets
+        if (Math.random() > 0.7) {
+          planet.style.animation = `rotatePlanet ${
+            Math.random() * 20 + 10
+          }s linear infinite`;
+        }
+
+        spaceContainer.appendChild(planet);
+
+        // Store planet data for animation
+        planets.push({
+          element: planet,
+          x: startX,
+          y: startY,
+          size: size,
+          vx: (Math.random() * 2 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Horizontal velocity
+          vy: (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Vertical velocity
+        });
+      }
+
+      // Add CSS for planet rotation
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes rotatePlanet {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Animate planets using requestAnimationFrame
+      function animatePlanets() {
+        planets.forEach((planet) => {
+          // Update position
+          planet.x += planet.vx;
+          planet.y += planet.vy;
+
+          // Check horizontal boundaries
+          if (planet.x <= 0) {
+            planet.x = 0;
+            planet.vx = Math.abs(planet.vx); // Bounce right
+          } else if (planet.x >= window.innerWidth - planet.size) {
+            planet.x = window.innerWidth - planet.size;
+            planet.vx = -Math.abs(planet.vx); // Bounce left
+          }
+
+          // Check vertical boundaries
+          if (planet.y <= 0) {
+            planet.y = 0;
+            planet.vy = Math.abs(planet.vy); // Bounce down
+          } else if (planet.y >= window.innerHeight - planet.size) {
+            planet.y = window.innerHeight - planet.size;
+            planet.vy = -Math.abs(planet.vy); // Bounce up
+          }
+
+          // Apply new position
+          planet.element.style.left = `${planet.x}px`;
+          planet.element.style.top = `${planet.y}px`;
+        });
+
+        requestAnimationFrame(animatePlanets);
+      }
+
+      // Start animation
+      animatePlanets();
+
+      // Update planet positions on window resize
+      window.addEventListener("resize", () => {
+        planets.forEach((planet) => {
+          // Ensure planets stay within new screen boundaries
+          if (planet.x > window.innerWidth - planet.size) {
+            planet.x = window.innerWidth - planet.size;
+          }
+          if (planet.y > window.innerHeight - planet.size) {
+            planet.y = window.innerHeight - planet.size;
+          }
+        });
+      });
+
+      // PROGRESS BAR ANIMATION FUNCTIONALITY
+      function animateProgressBars() {
+        const progressBars = document.querySelectorAll(".progress");
+
+        progressBars.forEach((bar) => {
+          const rect = bar.getBoundingClientRect();
+          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+
+          if (isInViewport && !bar.classList.contains("animated")) {
+            const width = bar.getAttribute("data-width");
+            bar.style.width = `${width}%`;
+            bar.classList.add("animated");
+          }
+        });
+      }
+
+      // Initialize progress bars to 0%
+      function initializeProgressBars() {
+        const progressBars = document.querySelectorAll(".progress");
+        progressBars.forEach((bar) => {
+          bar.style.width = "0%";
+        });
+      }
+
+      // Initial check and scroll event listener
+      window.addEventListener("scroll", animateProgressBars);
+      window.addEventListener("load", () => {
+        initializeProgressBars();
+        animateProgressBars(); // Check on page load
+      });
+
+      // Create mathematical formulas
+      const mathContainer = document.getElementById("math-formulas");
+
+      // Define mathematical formulas with their visual representations
+      const mathFormulas = [
+        {
+          text: "E = mc²",
+          svg: `<svg width="120" height="60" viewBox="0 0 120 60">
+            <text x="10" y="35" font-family="Times New Roman" font-size="24" fill="white">E = mc²</text>
+          </svg>`,
+        },
+        {
+          text: "a² + b² = c²",
+          svg: `<svg width="150" height="100" viewBox="0 0 150 100">
+            <polygon points="30,70 30,30 70,70" fill="none" stroke="#6efafd" stroke-width="2"/>
+            <text x="75" y="45" font-family="Times New Roman" font-size="14" fill="white">a</text>
+            <text x="20" y="55" font-family="Times New Roman" font-size="14" fill="white">b</text>
+            <text x="45" y="20" font-family="Times New Roman" font-size="14" fill="white">c</text>
+            <text x="80" y="85" font-family="Times New Roman" font-size="18" fill="white">a² + b² = c²</text>
+          </svg>`,
+        },
+        {
+          text: "φ = (1+√5)/2",
+          svg: `<svg width="180" height="100" viewBox="0 0 180 100">
+            <path d="M30,50 Q50,20 70,50 T110,50" fill="none" stroke="#ff6ec7" stroke-width="2"/>
+            <text x="120" y="55" font-family="Times New Roman" font-size="18" fill="white">φ = (1+√5)/2</text>
+          </svg>`,
+        },
+        {
+          text: "∫ f(x) dx",
+          svg: `<svg width="150" height="100" viewBox="0 0 150 100">
+            <path d="M20,50 Q40,30 60,50 T100,50" fill="none" stroke="#ffcc00" stroke-width="2"/>
+            <text x="105" y="55" font-family="Times New Roman" font-size="18" fill="white">∫ f(x) dx</text>
+          </svg>`,
+        },
+        {
+          text: "sin²θ + cos²θ = 1",
+          svg: `<svg width="200" height="120" viewBox="0 0 200 120">
+            <circle cx="60" cy="60" r="40" fill="none" stroke="#6efafd" stroke-width="2"/>
+            <line x1="60" y1="60" x2="100" y2="60" stroke="#ff6ec7" stroke-width="2"/>
+            <line x1="60" y1="60" x2="60" y2="20" stroke="#ffcc00" stroke-width="2"/>
+            <line x1="60" y1="60" x2="100" y2="20" stroke="white" stroke-width="2" stroke-dasharray="5,5"/>
+            <text x="120" y="40" font-family="Times New Roman" font-size="14" fill="white">sin²θ + cos²θ = 1</text>
+          </svg>`,
+        },
+        {
+          text: "π ≈ 3.14159",
+          svg: `<svg width="150" height="100" viewBox="0 0 150 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#ffcc00" stroke-width="2"/>
+            <text x="90" y="55" font-family="Times New Roman" font-size="18" fill="white">π ≈ 3.14159</text>
+          </svg>`,
+        },
+        {
+          text: "∇ × E = -∂B/∂t",
+          svg: `<svg width="180" height="100" viewBox="0 0 180 100">
+            <text x="10" y="45" font-family="Times New Roman" font-size="18" fill="white">∇ × E = -∂B/∂t</text>
+          </svg>`,
+        },
+        {
+          text: "F = G(m₁m₂)/r²",
+          svg: `<svg width="200" height="100" viewBox="0 0 200 100">
+            <circle cx="40" cy="50" r="20" fill="#6efafd" opacity="0.7"/>
+            <circle cx="100" cy="50" r="15" fill="#ff6ec7" opacity="0.7"/>
+            <text x="120" y="55" font-family="Times New Roman" font-size="16" fill="white">F = G(m₁m₂)/r²</text>
+          </svg>`,
+        },
+      ];
+
+      // Function to create and position a mathematical formula
+      function createMathFormula() {
+        const formulaIndex = Math.floor(Math.random() * mathFormulas.length);
+        const formula = mathFormulas[formulaIndex];
+
+        const formulaElement = document.createElement("div");
+        formulaElement.classList.add("math-formula");
+
+        // Random position
+        const x = Math.random() * (window.innerWidth - 200);
+        const y = Math.random() * (window.innerHeight - 100);
+
+        formulaElement.style.left = `${x}px`;
+        formulaElement.style.top = `${y}px`;
+
+        // Random animation delay and duration
+        const delay = Math.random() * 15;
+        const duration = 8 + Math.random() * 7;
+
+        formulaElement.style.animationDelay = `${delay}s`;
+        formulaElement.style.animationDuration = `${duration}s`;
+
+        // Add the formula content
+        formulaElement.innerHTML = formula.svg;
+
+        mathContainer.appendChild(formulaElement);
+
+        // Remove the element after animation completes
+        setTimeout(() => {
+          if (formulaElement.parentNode) {
+            formulaElement.parentNode.removeChild(formulaElement);
+          }
+        }, (delay + duration) * 1000);
+      }
+
+      // Create multiple mathematical formulas
+      for (let i = 0; i < 4; i++) {
+        setTimeout(() => {
+          createMathFormula();
+          // Continue creating formulas at intervals
+          setInterval(createMathFormula, 3000);
+        }, i * 1000);
+      }
+
+      // Navigation functionality
+      const navbarToggle = document.querySelector(".navbar-toggle");
+      const navbarMenu = document.querySelector(".navbar-menu");
+      const navbarLinks = document.querySelectorAll(".navbar-link");
+
+      // Toggle mobile menu
+      navbarToggle.addEventListener("click", () => {
+        navbarToggle.classList.toggle("active");
+        navbarMenu.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on a link
+      navbarLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          navbarToggle.classList.remove("active");
+          navbarMenu.classList.remove("active");
+        });
+      });
+
+      // Update active link on scroll
+      window.addEventListener("scroll", () => {
+        let current = "";
+        const sections = document.querySelectorAll("section");
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (scrollY >= sectionTop - 100) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navbarLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").substring(1) === current) {
+            link.classList.add("active");
+          }
+        });
+      });
+
+      // Certificate Modal Functionality
+      const certificateModal = document.getElementById("certificateModal");
+      const certificateIframe = document.getElementById("certificateIframe");
+      const modalTitle = document.getElementById("modalTitle");
+      const closeModal = document.getElementById("closeModal");
+      const achievements = document.querySelectorAll(".achievement");
+
+      // Open modal when clicking on a certificate
+      achievements.forEach((achievement) => {
+        achievement.addEventListener("click", () => {
+          const certificateUrl = achievement.getAttribute("data-certificate");
+          const certificateTitle = achievement.getAttribute("data-title");
+
+          // Update modal content
+          certificateIframe.src = certificateUrl;
+          modalTitle.textContent = certificateTitle;
+
+          // Show modal
+          certificateModal.classList.add("active");
+          document.body.style.overflow = "hidden"; // Prevent scrolling
+        });
+      });
+
+      // Close modal when clicking the close button
+      closeModal.addEventListener("click", () => {
+        certificateModal.classList.remove("active");
+        certificateIframe.src = ""; // Clear iframe
+        document.body.style.overflow = ""; // Restore scrolling
+      });
+
+      // Close modal when clicking outside the content
+      certificateModal.addEventListener("click", (e) => {
+        if (e.target === certificateModal) {
+          certificateModal.classList.remove("active");
+          certificateIframe.src = ""; // Clear iframe
+          document.body.style.overflow = ""; // Restore scrolling
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          certificateModal.classList.contains("active")
+        ) {
+          certificateModal.classList.remove("active");
+          certificateIframe.src = ""; // Clear iframe
+          document.body.style.overflow = ""; // Restore scrolling
+        }
+      });
+    </script>
+    <script>
+      // Tambahkan variabel global untuk mengontrol kecepatan planet
+      let planetSpeedMultiplier = 1;
+      let isAvatarHovered = false;
+
+      // Fungsi untuk mempercepat planet
+      function speedUpPlanets() {
+        planetSpeedMultiplier = 10; // 3x lebih cepat
+        isAvatarHovered = true;
+      }
+
+      // Fungsi untuk mengembalikan kecepatan normal planet
+      function slowDownPlanets() {
+        planetSpeedMultiplier = 1; // Kecepatan normal
+        isAvatarHovered = false;
+      }
+
+      // Modifikasi fungsi animatePlanets untuk menggunakan multiplier kecepatan
+      function animatePlanets() {
+        planets.forEach((planet) => {
+          // Update position dengan multiplier kecepatan
+          planet.x += planet.vx * planetSpeedMultiplier;
+          planet.y += planet.vy * planetSpeedMultiplier;
+
+          // Check horizontal boundaries
+          if (planet.x <= 0) {
+            planet.x = 0;
+            planet.vx = Math.abs(planet.vx); // Bounce right
+          } else if (planet.x >= window.innerWidth - planet.size) {
+            planet.x = window.innerWidth - planet.size;
+            planet.vx = -Math.abs(planet.vx); // Bounce left
+          }
+
+          // Check vertical boundaries
+          if (planet.y <= 0) {
+            planet.y = 0;
+            planet.vy = Math.abs(planet.vy); // Bounce down
+          } else if (planet.y >= window.innerHeight - planet.size) {
+            planet.y = window.innerHeight - planet.size;
+            planet.vy = -Math.abs(planet.vy); // Bounce up
+          }
+
+          // Apply new position
+          planet.element.style.left = `${planet.x}px`;
+          planet.element.style.top = `${planet.y}px`;
+        });
+
+        requestAnimationFrame(animatePlanets);
+      }
+
+      // Tambahkan event listener untuk avatar
+      document.addEventListener("DOMContentLoaded", function () {
+        const avatarContainer = document.querySelector(".avatar-container");
+
+        avatarContainer.addEventListener("mouseenter", speedUpPlanets);
+        avatarContainer.addEventListener("mouseleave", slowDownPlanets);
+      });
+    </script>
+  </body>
+</html>
