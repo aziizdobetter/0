@@ -484,17 +484,75 @@
         max-width: 1200px;
       }
 
+      /* --- Data Flow Animation (Added) --- */
+      /* The base class for applying the animation */
+      .data-flow-card {
+        position: relative; /* Essential for containing the ::before element */
+        overflow: hidden; /* Essential to crop the moving background */
+        z-index: 1; /* Ensures content is above the pseudo-element background */
+      }
+
+      /* Data Flow Animation Pseudo-Element */
+      .data-flow-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%; /* Double the width to allow horizontal movement */
+        height: 100%;
+        opacity: 0.1; /* Set low to make it a subtle background effect */
+        z-index: -1; /* Place behind the card content */
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          -45deg,
+          /* Diagonal stripes */ transparent,
+          transparent 10px,
+          #00f6ff 11px,
+          /* Neon blue/cyan color */ #00f6ff 13px
+        );
+        animation: data-flow 10s linear infinite; /* Apply the movement animation */
+      }
+
+      /* Data Flow Keyframe Animation */
+      @keyframes data-flow {
+        from {
+          transform: translateX(
+            -50%
+          ); /* Start position: half a card width left */
+        }
+        to {
+          transform: translateX(0%); /* End position: back to normal */
+        }
+      }
+
       .service {
         flex: 1;
         min-width: 300px;
         padding: 30px;
         background: rgba(26, 26, 74, 0.5);
         border-radius: 10px;
-        border: 1px solid #6efafd;
+        border: 4px solid transparent;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(
+          to right,
+          #00c6ff,
+          #f000ff,
+          #ffeb3b
+        );
         box-shadow: 0 0 15px rgba(110, 250, 253, 0.3);
         opacity: 0;
         transform: translateY(30px);
         transition: opacity 0.8s ease, transform 0.8s ease;
+        /* The fix: clip the element's outer shape */
+        -webkit-clip-path: inset(0 round 10px);
+        clip-path: inset(0 round 10px);
+      }
+
+      .service:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(110, 250, 253, 0.8),
+          0 0 30px rgba(110, 250, 253, 0.4),
+          inset 0 0 30px rgba(110, 250, 253, 0.3);
       }
 
       section.visible .service {
@@ -518,6 +576,68 @@
         color: #ff6ec7;
         margin-bottom: 15px;
         font-size: 1.5rem;
+        text-shadow: 0 0 10px rgba(255, 108, 199, 0.5);
+        animation: title-pulse 3s ease-in-out infinite;
+      }
+
+      @keyframes title-pulse {
+        0%,
+        100% {
+          text-shadow: 0 0 10px rgba(255, 108, 199, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 20px rgba(255, 108, 199, 0.8),
+            0 0 30px rgba(255, 108, 199, 0.4);
+        }
+      }
+
+      /* Different title colors for each service */
+      .service:nth-child(1) h3 {
+        color: #6efafd;
+        animation: title-pulse-cyan 3s ease-in-out infinite;
+      }
+
+      .service:nth-child(2) h3 {
+        color: #ff6ec7;
+        animation: title-pulse-pink 3s ease-in-out infinite;
+      }
+
+      .service:nth-child(3) h3 {
+        color: #ffcc00;
+        animation: title-pulse-yellow 3s ease-in-out infinite;
+      }
+
+      @keyframes title-pulse-cyan {
+        0%,
+        100% {
+          text-shadow: 0 0 10px rgba(110, 250, 253, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 20px rgba(110, 250, 253, 0.8),
+            0 0 30px rgba(110, 250, 253, 0.4);
+        }
+      }
+
+      @keyframes title-pulse-pink {
+        0%,
+        100% {
+          text-shadow: 0 0 10px rgba(255, 108, 199, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 20px rgba(255, 108, 199, 0.8),
+            0 0 30px rgba(255, 108, 199, 0.4);
+        }
+      }
+
+      @keyframes title-pulse-yellow {
+        0%,
+        100% {
+          text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 20px rgba(255, 204, 0, 0.8),
+            0 0 30px rgba(255, 204, 0, 0.4);
+        }
       }
 
       /* Skills Section */
@@ -671,11 +791,14 @@
 
       .timeline-content h3 {
         color: #ffcc00;
+        font-size: 1.5rem;
         margin-bottom: 10px;
       }
 
       .timeline-content .date {
         color: #ff6ec7;
+        font-size: 1.5rem;
+        font-weight: bold;
         font-style: italic;
         margin-bottom: 10px;
       }
@@ -691,14 +814,21 @@
 
       .project {
         background: rgba(26, 26, 74, 0.7);
+        backdrop-filter: blur(10px);
         border-radius: 10px;
         overflow: hidden;
-        border: 1px solid #6efafd;
+        border: 3px solid #6efafd;
         box-shadow: 0 0 15px rgba(110, 250, 253, 0.3);
         transition: transform 0.3s ease;
         opacity: 0;
         transform: translateY(30px);
         transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .project:hover {
+        box-shadow: 0 15px 30px rgba(110, 250, 253, 0.4),
+          0 0 30px rgba(110, 250, 253, 0.2),
+          inset 0 0 30px rgba(110, 250, 253, 0.1);
       }
 
       section.visible .project {
@@ -725,7 +855,6 @@
 
       .project:hover {
         cursor: pointer;
-        transform: translateY(-10px);
       }
 
       .project-img {
@@ -749,6 +878,8 @@
       .project-info h3 {
         color: #ffcc00;
         margin-bottom: 10px;
+        text-shadow: 0 0 10px rgba(255, 108, 199, 0.5);
+        animation: title-pulse-yellow 3s ease-in-out infinite;
       }
 
       /* Achievements Section */
@@ -1277,12 +1408,11 @@
       </div>
     </section>
 
-    <!-- Rest of the HTML remains the same -->
     <!-- What I Do Section -->
     <section id="what-i-do">
       <h2 class="section-title">Focus</h2>
       <div class="services">
-        <div class="service">
+        <div class="service data-flow-card">
           <h3>Frontend Development</h3>
           <p>
             Creating responsive and interactive user interfaces using html, css,
@@ -1290,7 +1420,7 @@
             user experience.
           </p>
         </div>
-        <div class="service">
+        <div class="service data-flow-card">
           <h3>Backend Development</h3>
           <p>
             Building robust server-side applications with MySQL, Firebase and
@@ -1298,7 +1428,7 @@
             scalability for web and mobile applications.
           </p>
         </div>
-        <div class="service">
+        <div class="service data-flow-card">
           <h3>UI/UX Design</h3>
           <p>
             Designing intuitive and visually appealing interfaces that enhance
@@ -1411,7 +1541,7 @@
       <h2 class="section-title">Education</h2>
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-content">
+          <div class="timeline-content data-flow-card">
             <h3>Software Engineering</h3>
             <div class="date">2021 - 2024</div>
             <p>
@@ -1421,7 +1551,7 @@
           </div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-content">
+          <div class="timeline-content data-flow-card">
             <h3>Informatics Engineering</h3>
             <div class="date">2024 - Now</div>
             <p>
@@ -1437,7 +1567,7 @@
     <section id="projects">
       <h2 class="section-title">My Projects</h2>
       <div class="projects-grid">
-        <div class="project">
+        <div class="project data-flow-card">
           <div class="project-img">
             <img
               src="https://raw.githubusercontent.com/aziizdobetter/gunting-batu-kertas/refs/heads/main/icons/picarus.png"
@@ -1456,7 +1586,7 @@
             </p>
           </div>
         </div>
-        <div class="project">
+        <div class="project data-flow-card">
           <a href="https://aziizdobetter.github.io/gunting-batu-kertas/">
             <div class="project-img">
               <img
@@ -1477,7 +1607,7 @@
             </div>
           </a>
         </div>
-        <div class="project">
+        <div class="project data-flow-card">
           <div class="project-img">
             <img
               src="https://raw.githubusercontent.com/nulief-ai/nulief-ai/refs/heads/main/app_icon_foreground_white.png"
@@ -1799,7 +1929,7 @@
 
       // Fungsi untuk mempercepat planet
       function speedUpPlanets() {
-        planetSpeedMultiplier = 10; // 3x lebih cepat
+        planetSpeedMultiplier = 10; // 10x lebih cepat
         isAvatarHovered = true;
       }
 
