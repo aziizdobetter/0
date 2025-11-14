@@ -262,6 +262,14 @@
         align-items: center;
         position: relative;
         z-index: 2;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .section-title {
@@ -270,6 +278,14 @@
         text-align: center;
         color: #6efafd;
         text-shadow: 0 0 10px rgba(110, 250, 253, 0.7);
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+      }
+
+      section.visible .section-title {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       /* IMPROVED Header Section */
@@ -296,6 +312,14 @@
         position: relative;
         cursor: pointer;
         transition: transform 0.3s ease;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      }
+
+      section.visible .avatar-container {
+        opacity: 1;
+        transform: scale(1);
       }
 
       .avatar {
@@ -354,6 +378,14 @@
         color: #6efafd;
         text-shadow: 0 0 15px rgba(110, 250, 253, 0.7);
         line-height: 1.2;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+      }
+
+      section.visible .intro-text h1 {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .greeting {
@@ -362,6 +394,14 @@
         margin-bottom: 10px;
         text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
         font-weight: 600;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      }
+
+      section.visible .greeting {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .intro-text p {
@@ -372,7 +412,14 @@
         padding: 20px 30px;
         border-radius: 10px;
         position: relative;
-        /* border-left: 3px solid #6efafd; */
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+      }
+
+      section.visible .intro-text p {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       /* Sudut kanan atas dan kiri bawah */
@@ -445,6 +492,26 @@
         border-radius: 10px;
         border: 1px solid #6efafd;
         box-shadow: 0 0 15px rgba(110, 250, 253, 0.3);
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .service {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      section.visible .service:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+
+      section.visible .service:nth-child(2) {
+        transition-delay: 0.4s;
+      }
+
+      section.visible .service:nth-child(3) {
+        transition-delay: 0.6s;
       }
 
       .service h3 {
@@ -462,10 +529,38 @@
         backdrop-filter: blur(10px);
         max-width: 800px;
         width: 100%;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .skills-container {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .skill-category {
         margin-bottom: 30px;
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .skill-category {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      section.visible .skill-category:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+
+      section.visible .skill-category:nth-child(2) {
+        transition-delay: 0.4s;
+      }
+
+      section.visible .skill-category:nth-child(3) {
+        transition-delay: 0.6s;
       }
 
       .skill-category h3 {
@@ -535,6 +630,22 @@
         position: relative;
         width: 50%;
         padding: 20px;
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .timeline-item {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      section.visible .timeline-item:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+
+      section.visible .timeline-item:nth-child(2) {
+        transition-delay: 0.4s;
       }
 
       .timeline-item:nth-child(odd) {
@@ -543,6 +654,11 @@
 
       .timeline-item:nth-child(even) {
         left: 50%;
+        transform: translateX(50px);
+      }
+
+      section.visible .timeline-item:nth-child(even) {
+        transform: translateX(0);
       }
 
       .timeline-content {
@@ -580,6 +696,26 @@
         border: 1px solid #6efafd;
         box-shadow: 0 0 15px rgba(110, 250, 253, 0.3);
         transition: transform 0.3s ease;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .project {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      section.visible .project:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+
+      section.visible .project:nth-child(2) {
+        transition-delay: 0.4s;
+      }
+
+      section.visible .project:nth-child(3) {
+        transition-delay: 0.6s;
       }
 
       .project a {
@@ -639,6 +775,30 @@
         text-align: center;
         cursor: pointer;
         transition: transform 0.3s ease;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .achievement {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      section.visible .achievement:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+
+      section.visible .achievement:nth-child(2) {
+        transition-delay: 0.4s;
+      }
+
+      section.visible .achievement:nth-child(3) {
+        transition-delay: 0.6s;
+      }
+
+      section.visible .achievement:nth-child(4) {
+        transition-delay: 0.8s;
       }
 
       .achievement:hover {
@@ -676,6 +836,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .contact-container {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .contact-info {
@@ -692,6 +860,26 @@
         align-items: center;
         gap: 10px;
         color: #6efafd;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .contact-item {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      section.visible .contact-item:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+
+      section.visible .contact-item:nth-child(2) {
+        transition-delay: 0.4s;
+      }
+
+      section.visible .contact-item:nth-child(3) {
+        transition-delay: 0.6s;
       }
 
       .contact-icon {
@@ -706,6 +894,26 @@
 
       .form-group {
         margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      section.visible .form-group {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      section.visible .form-group:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+
+      section.visible .form-group:nth-child(2) {
+        transition-delay: 0.4s;
+      }
+
+      section.visible .form-group:nth-child(3) {
+        transition-delay: 0.6s;
       }
 
       .form-group input,
@@ -734,6 +942,14 @@
         font-weight: bold;
         cursor: pointer;
         transition: transform 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+      }
+
+      section.visible .submit-btn {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .submit-btn:hover {
@@ -881,12 +1097,12 @@
         .navbar-menu {
           position: fixed;
           left: -100%;
-          top: 60px;
+          top: 100px;
           flex-direction: column;
+          text-align: center;
           background: rgba(10, 10, 40, 0.7);
           width: 100%;
-          text-align: center;
-          transition: 0.3s;
+          transition: 0.5s;
           box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
           padding: 20px 0;
           gap: 0;
@@ -894,6 +1110,7 @@
 
         .navbar-menu.active {
           left: 0;
+          top: 60px;
         }
 
         .navbar-item {
@@ -1505,63 +1722,66 @@
       ];
       const planets = [];
 
-// Create planets with responsive count
-function createPlanets() {
-  // Clear existing planets
-  planets.length = 0;
-  const existingPlanets = spaceContainer.querySelectorAll('.planet');
-  existingPlanets.forEach(planet => planet.remove());
-  
-  // Determine number of planets based on screen width
-  const isMobile = window.innerWidth <= 768;
-  const planetCount = isMobile ? 3 : 10; // Reduced from 10 to 5 on mobile
-  
-  for (let i = 0; i < planetCount; i++) {
-    const planet = document.createElement("div");
-    planet.classList.add("planet");
+      // Create planets with responsive count
+      function createPlanets() {
+        // Clear existing planets
+        planets.length = 0;
+        const existingPlanets = spaceContainer.querySelectorAll(".planet");
+        existingPlanets.forEach((planet) => planet.remove());
 
-    // Vary planet sizes more for visual interest
-    const size = Math.random() * 80 + 20;
+        // Determine number of planets based on screen width
+        const isMobile = window.innerWidth <= 768;
+        const planetCount = isMobile ? 3 : 10; // Reduced from 10 to 5 on mobile
 
-    planet.style.width = `${size}px`;
-    planet.style.height = `${size}px`;
-    planet.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        for (let i = 0; i < planetCount; i++) {
+          const planet = document.createElement("div");
+          planet.classList.add("planet");
 
-    // Add some planets with radial gradients for more realistic appearance
-    if (Math.random() > 0.5) {
-      const color1 = colors[Math.floor(Math.random() * colors.length)];
-      const color2 = colors[Math.floor(Math.random() * colors.length)];
-      planet.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
-    }
+          // Vary planet sizes more for visual interest
+          const size = Math.random() * 80 + 20;
 
-    // Random starting position within screen bounds
-    const startX = Math.random() * (window.innerWidth - size);
-    const startY = Math.random() * (window.innerHeight - size);
+          planet.style.width = `${size}px`;
+          planet.style.height = `${size}px`;
+          planet.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
 
-    planet.style.left = `${startX}px`;
-    planet.style.top = `${startY}px`;
+          // Add some planets with radial gradients for more realistic appearance
+          if (Math.random() > 0.5) {
+            const color1 = colors[Math.floor(Math.random() * colors.length)];
+            const color2 = colors[Math.floor(Math.random() * colors.length)];
+            planet.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
+          }
 
-    // Add subtle rotation animation to some planets
-    if (Math.random() > 0.7) {
-      planet.style.animation = `rotatePlanet ${Math.random() * 20 + 10}s linear infinite`;
-    }
+          // Random starting position within screen bounds
+          const startX = Math.random() * (window.innerWidth - size);
+          const startY = Math.random() * (window.innerHeight - size);
 
-    spaceContainer.appendChild(planet);
+          planet.style.left = `${startX}px`;
+          planet.style.top = `${startY}px`;
 
-    // Store planet data for animation
-    planets.push({
-      element: planet,
-      x: startX,
-      y: startY,
-      size: size,
-      vx: (Math.random() * 2 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Horizontal velocity
-      vy: (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Vertical velocity
-    });
-  }
-}
+          // Add subtle rotation animation to some planets
+          if (Math.random() > 0.7) {
+            planet.style.animation = `rotatePlanet ${
+              Math.random() * 20 + 10
+            }s linear infinite`;
+          }
 
-// Initial planet creation
-createPlanets();
+          spaceContainer.appendChild(planet);
+
+          // Store planet data for animation
+          planets.push({
+            element: planet,
+            x: startX,
+            y: startY,
+            size: size,
+            vx: (Math.random() * 2 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Horizontal velocity
+            vy: (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Vertical velocity
+          });
+        }
+      }
+
+      // Initial planet creation
+      createPlanets();
 
       // Add CSS for planet rotation
       const style = document.createElement("style");
@@ -1573,12 +1793,28 @@ createPlanets();
       `;
       document.head.appendChild(style);
 
+      // Tambahkan variabel global untuk mengontrol kecepatan planet
+      let planetSpeedMultiplier = 1;
+      let isAvatarHovered = false;
+
+      // Fungsi untuk mempercepat planet
+      function speedUpPlanets() {
+        planetSpeedMultiplier = 10; // 3x lebih cepat
+        isAvatarHovered = true;
+      }
+
+      // Fungsi untuk mengembalikan kecepatan normal planet
+      function slowDownPlanets() {
+        planetSpeedMultiplier = 1; // Kecepatan normal
+        isAvatarHovered = false;
+      }
+
       // Animate planets using requestAnimationFrame
       function animatePlanets() {
         planets.forEach((planet) => {
-          // Update position
-          planet.x += planet.vx;
-          planet.y += planet.vy;
+          // Update position dengan multiplier kecepatan
+          planet.x += planet.vx * planetSpeedMultiplier;
+          planet.y += planet.vy * planetSpeedMultiplier;
 
           // Check horizontal boundaries
           if (planet.x <= 0) {
@@ -1880,56 +2116,32 @@ createPlanets();
           document.body.style.overflow = ""; // Restore scrolling
         }
       });
-    </script>
-    <script>
-      // Tambahkan variabel global untuk mengontrol kecepatan planet
-      let planetSpeedMultiplier = 1;
-      let isAvatarHovered = false;
 
-      // Fungsi untuk mempercepat planet
-      function speedUpPlanets() {
-        planetSpeedMultiplier = 10; // 3x lebih cepat
-        isAvatarHovered = true;
-      }
+      // SECTION SCROLL ANIMATION
+      function initScrollAnimations() {
+        const sections = document.querySelectorAll("section");
 
-      // Fungsi untuk mengembalikan kecepatan normal planet
-      function slowDownPlanets() {
-        planetSpeedMultiplier = 1; // Kecepatan normal
-        isAvatarHovered = false;
-      }
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1,
+        };
 
-      // Modifikasi fungsi animatePlanets untuk menggunakan multiplier kecepatan
-      function animatePlanets() {
-        planets.forEach((planet) => {
-          // Update position dengan multiplier kecepatan
-          planet.x += planet.vx * planetSpeedMultiplier;
-          planet.y += planet.vy * planetSpeedMultiplier;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        }, observerOptions);
 
-          // Check horizontal boundaries
-          if (planet.x <= 0) {
-            planet.x = 0;
-            planet.vx = Math.abs(planet.vx); // Bounce right
-          } else if (planet.x >= window.innerWidth - planet.size) {
-            planet.x = window.innerWidth - planet.size;
-            planet.vx = -Math.abs(planet.vx); // Bounce left
-          }
-
-          // Check vertical boundaries
-          if (planet.y <= 0) {
-            planet.y = 0;
-            planet.vy = Math.abs(planet.vy); // Bounce down
-          } else if (planet.y >= window.innerHeight - planet.size) {
-            planet.y = window.innerHeight - planet.size;
-            planet.vy = -Math.abs(planet.vy); // Bounce up
-          }
-
-          // Apply new position
-          planet.element.style.left = `${planet.x}px`;
-          planet.element.style.top = `${planet.y}px`;
+        sections.forEach((section) => {
+          observer.observe(section);
         });
-
-        requestAnimationFrame(animatePlanets);
       }
+
+      // Initialize scroll animations when page loads
+      window.addEventListener("load", initScrollAnimations);
 
       // Tambahkan event listener untuk avatar
       document.addEventListener("DOMContentLoaded", function () {
@@ -1941,9 +2153,3 @@ createPlanets();
     </script>
   </body>
 </html>
-
-
-
-
-
-
