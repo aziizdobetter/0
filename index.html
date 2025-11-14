@@ -1426,7 +1426,7 @@
 
       // Create graph lines with random up/down movement
       const graphContainer = document.getElementById("graph-lines");
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 50; i++) {
         const graphLine = document.createElement("div");
         graphLine.classList.add("graph-line");
 
@@ -1740,14 +1740,39 @@ createPlanets();
         }, (delay + duration) * 1000);
       }
 
-      // Create multiple mathematical formulas
-      for (let i = 0; i < 4; i++) {
-        setTimeout(() => {
-          createMathFormula();
-          // Continue creating formulas at intervals
-          setInterval(createMathFormula, 3000);
-        }, i * 1000);
+      // Function to start math formula animation with responsive settings
+      function startMathFormulas() {
+        // Clear existing formulas
+        const existingFormulas =
+          mathContainer.querySelectorAll(".math-formula");
+        existingFormulas.forEach((formula) => formula.remove());
+
+        // Clear any existing intervals
+        if (window.mathFormulaInterval) {
+          clearInterval(window.mathFormulaInterval);
+        }
+
+        // Determine formula settings based on screen width
+        const isMobile = window.innerWidth <= 768;
+        const initialFormulas = isMobile ? 2 : 4; // Reduced from 4 to 2 on mobile
+        const intervalTime = isMobile ? 5000 : 3000; // Longer interval on mobile
+
+        // Create initial formulas
+        for (let i = 0; i < initialFormulas; i++) {
+          setTimeout(() => {
+            createMathFormula();
+          }, i * 1000);
+        }
+
+        // Continue creating formulas at intervals
+        window.mathFormulaInterval = setInterval(
+          createMathFormula,
+          intervalTime
+        );
       }
+
+      // Initial math formula creation
+      startMathFormulas();
 
       // Navigation functionality
       const navbarToggle = document.querySelector(".navbar-toggle");
@@ -1900,6 +1925,7 @@ createPlanets();
     </script>
   </body>
 </html>
+
 
 
 
