@@ -404,14 +404,50 @@
         transform: translateY(0);
       }
 
+      /* Add the new keyframe animation */
+      @keyframes data-flow-text {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          /* Translate by the size of the pattern (51px) to loop seamlessly */
+          background-position: 51px 51px;
+        }
+      }
+
       .intro-text p {
         font-size: 1.2rem;
         margin-bottom: 25px;
-        background: rgba(26, 26, 74, 0.7);
+
+        /* COMBINED BACKGROUND: Moving Grid Pattern on top of Solid Color */
+        background: repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 50px,
+            rgba(0, 212, 255, 0.5) 50px,
+            rgba(0, 212, 255, 0.5) 51px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 50px,
+            rgba(255, 0, 255, 0.5) 50px,
+            rgba(255, 0, 255, 0.5) 51px
+          ),
+          /* Base color for the text box */ rgba(26, 26, 74, 0.7);
+
+        background-size: 51px 51px; /* Defines the size of the repeating pattern */
+
+        /* Apply the animation */
+        animation: data-flow-text 1s linear infinite;
+
         backdrop-filter: blur(10px);
         padding: 20px 30px;
         border-radius: 10px;
         position: relative;
+        /* Ensure the text is visible */
+        z-index: 2;
+
         opacity: 0;
         transform: translateY(30px);
         transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
@@ -1222,12 +1258,12 @@
         .navbar-menu {
           position: fixed;
           left: -100%;
-          top: 100px;
+          top: 60px;
           flex-direction: column;
           text-align: center;
           background: rgba(10, 10, 40, 0.7);
           width: 100%;
-          transition: 0.5s;
+          transition: 0.3s;
           box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
           padding: 20px 0;
           gap: 0;
@@ -1235,7 +1271,6 @@
 
         .navbar-menu.active {
           left: 0;
-          top: 60px;
         }
 
         .navbar-item {
@@ -1436,7 +1471,7 @@
     <!-- Skills Section -->
     <section id="skills">
       <h2 class="section-title">My Skills</h2>
-      <div class="skills-container">
+      <div class="skills-container data-flow-card">
         <div class="skill-category">
           <h3>Frontend/Design</h3>
           <div class="skill frontend">
