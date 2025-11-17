@@ -2267,24 +2267,58 @@
         resetCursorIdleTimeout();
       });
 
-      // Modified touch movement tracking for mobile
+      // Improved touch handling that allows scrolling
+      let lastTouchY = 0;
+      let isScrolling = false;
+
+      document.addEventListener(
+        "touchstart",
+        (e) => {
+          lastTouchY = e.touches[0].clientY;
+          isScrolling = false;
+        },
+        { passive: true }
+      );
+
       document.addEventListener(
         "touchmove",
         (e) => {
-          e.preventDefault();
+          const touchY = e.touches[0].clientY;
+          const deltaY = Math.abs(touchY - lastTouchY);
 
-          // When touch moves, switch from avatar focus to cursor following
-          if (isAvatarFocused) {
-            isAvatarFocused = false;
-            isAvatarHovered = false;
-            togglePlanetIconsAndLines(false);
+          // Detect if user is trying to scroll (vertical movement)
+          if (deltaY > 5) {
+            isScrolling = true;
+            return; // Allow default scroll behavior
           }
 
-          const touch = e.touches[0];
-          updateTargetPosition(touch.clientX, touch.clientY);
-          resetCursorIdleTimeout();
+          // Only handle planet movement for small movements (likely intentional)
+          if (!isScrolling && deltaY <= 5) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            updateTargetPosition(touch.clientX, touch.clientY);
+
+            // Switch from avatar focus to cursor following
+            if (isAvatarFocused) {
+              isAvatarFocused = false;
+              isAvatarHovered = false;
+              togglePlanetIconsAndLines(false);
+            }
+
+            resetCursorIdleTimeout();
+          }
+
+          lastTouchY = touchY;
         },
         { passive: false }
+      );
+
+      document.addEventListener(
+        "touchend",
+        () => {
+          isScrolling = false;
+        },
+        { passive: true }
       );
 
       // Modified avatar hover events
