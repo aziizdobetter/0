@@ -408,7 +408,7 @@
         background-size: 51px 51px; /* Defines the size of the repeating pattern */
 
         /* Apply the animation */
-        animation: data-flow-text 1s linear infinite;
+        animation: data-flow-text 3s linear infinite;
 
         backdrop-filter: blur(10px);
         padding: 20px 30px;
@@ -2091,7 +2091,7 @@
 
         // Determine number of graph lines based on screen width
         const isMobile = window.innerWidth <= 768;
-        const lineCount = isMobile ? 30 : 50; // Reduced from 100 to 30 on mobile
+        const lineCount = isMobile ? 30 : 0; // Reduced from 100 to 30 on mobile
 
         for (let i = 0; i < lineCount; i++) {
           const graphLine = document.createElement("div");
@@ -2171,7 +2171,7 @@
 
         // Determine number of planets based on screen width
         const isMobile = window.innerWidth <= 768;
-        const planetCount = isMobile ? 3 : 10; // Reduced from 10 to 5 on mobile
+        const planetCount = isMobile ? 3 : 0; // Reduced from 10 to 5 on mobile
 
         for (let i = 0; i < planetCount; i++) {
           const planet = document.createElement("div");
