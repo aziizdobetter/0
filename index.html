@@ -539,6 +539,7 @@
         border: 1px solid #6efafd;
         box-shadow: 0 0 15px rgba(110, 250, 253, 0.3);
         opacity: 0;
+        backdrop-filter: blur(10px);
         transform: translateY(30px);
         transition: opacity 0.8s ease, transform 0.8s ease;
       }
@@ -787,6 +788,7 @@
         border-radius: 10px;
         border: 1px solid #6efafd;
         box-shadow: 0 0 10px rgba(110, 250, 253, 0.3);
+        backdrop-filter: blur(10px);
       }
 
       .timeline-content h3 {
@@ -905,6 +907,7 @@
         cursor: pointer;
         transition: transform 0.3s ease;
         opacity: 0;
+        backdrop-filter: blur(10px);
         transform: scale(0.8);
         transition: opacity 0.8s ease, transform 0.8s ease;
       }
@@ -1122,11 +1125,54 @@
         border-radius: 50%;
       }
 
+      /* Update planet styles for better glow effects */
       .planet {
         position: absolute;
         border-radius: 50%;
-        box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         transition: transform 0.1s linear;
+      }
+
+      /* Planet Icon Styles */
+      .planet-icon {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .planet-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+      }
+
+      /* Planet Connection Lines */
+      .planet-connections {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .connection-line {
+        position: absolute;
+        height: 2px;
+        background: linear-gradient(to right, #6efafd, #ff6ec7);
+        transform-origin: 0 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        box-shadow: 0 0 5px rgba(110, 250, 253, 0.7);
       }
 
       @keyframes float {
@@ -2152,7 +2198,7 @@
       spaceship.style.left = "10%";
       spaceContainer.appendChild(spaceship);
 
-      // Create planets with JavaScript-based bouncing animation
+      // Create planets with JavaScript-based animation
       const colors = [
         "#ff6ec7",
         "#6efafd",
@@ -2165,6 +2211,258 @@
       ];
       const planets = [];
 
+      // Target positions (cursor/avatar)
+      let targetX, targetY;
+      let isAvatarHovered = false;
+      let isCursorMoving = false;
+      let lastCursorMoveTime = 0;
+      let cursorStoppedTimeout;
+
+      // Orbit radius settings
+      const isMobile = window.innerWidth <= 768;
+      const avatarOrbitRadius = isMobile ? 140 : 200; // Larger radius for avatar
+      const cursorOrbitRadius = 100; // Smaller radius for cursor
+
+      // Initialize avatar focus state
+      let isAvatarFocused = true;
+      let cursorIdleTimeout;
+
+      // Function to focus on avatar
+      function focusOnAvatar() {
+        isAvatarFocused = true;
+        isAvatarHovered = true;
+
+        // Update target to avatar position
+        const avatarPos = updateAvatarPosition();
+        updateTargetPosition(avatarPos.x, avatarPos.y);
+
+        // Show planet icons and connection lines
+        togglePlanetIconsAndLines(true);
+
+        // Reset cursor idle timeout
+        resetCursorIdleTimeout();
+      }
+
+      // Function to reset cursor idle timeout
+      function resetCursorIdleTimeout() {
+        clearTimeout(cursorIdleTimeout);
+        cursorIdleTimeout = setTimeout(() => {
+          // After 3 seconds of cursor inactivity, return to avatar focus
+          if (!isAvatarHovered) {
+            focusOnAvatar();
+          }
+        }, 3000);
+      }
+
+      // Modified mouse movement tracking
+      document.addEventListener("mousemove", (e) => {
+        // When cursor moves, switch from avatar focus to cursor following
+        if (isAvatarFocused) {
+          isAvatarFocused = false;
+          isAvatarHovered = false;
+          togglePlanetIconsAndLines(false);
+        }
+
+        updateTargetPosition(e.clientX, e.clientY);
+        resetCursorIdleTimeout();
+      });
+
+      // Modified touch movement tracking for mobile
+      document.addEventListener(
+        "touchmove",
+        (e) => {
+          e.preventDefault();
+
+          // When touch moves, switch from avatar focus to cursor following
+          if (isAvatarFocused) {
+            isAvatarFocused = false;
+            isAvatarHovered = false;
+            togglePlanetIconsAndLines(false);
+          }
+
+          const touch = e.touches[0];
+          updateTargetPosition(touch.clientX, touch.clientY);
+          resetCursorIdleTimeout();
+        },
+        { passive: false }
+      );
+
+      // Modified avatar hover events
+      document.addEventListener("DOMContentLoaded", function () {
+        const avatarContainer = document.querySelector(".avatar-container");
+
+        avatarContainer.addEventListener("mouseenter", function () {
+          isAvatarHovered = true;
+          // Update target to avatar position when hovering
+          const avatarPos = updateAvatarPosition();
+          updateTargetPosition(avatarPos.x, avatarPos.y);
+
+          // Show planet icons and connection lines
+          togglePlanetIconsAndLines(true);
+
+          resetCursorIdleTimeout();
+        });
+
+        avatarContainer.addEventListener("mouseleave", function () {
+          isAvatarHovered = false;
+
+          // Only hide planet icons if not in avatar focus mode
+          if (!isAvatarFocused) {
+            togglePlanetIconsAndLines(false);
+          }
+
+          resetCursorIdleTimeout();
+        });
+
+        // Touch events for mobile avatar interaction
+        avatarContainer.addEventListener("touchstart", function () {
+          isAvatarHovered = true;
+          const avatarPos = updateAvatarPosition();
+          updateTargetPosition(avatarPos.x, avatarPos.y);
+
+          // Show planet icons and connection lines
+          togglePlanetIconsAndLines(true);
+
+          resetCursorIdleTimeout();
+        });
+
+        avatarContainer.addEventListener("touchend", function () {
+          isAvatarHovered = false;
+
+          // Only hide planet icons if not in avatar focus mode
+          if (!isAvatarFocused) {
+            togglePlanetIconsAndLines(false);
+          }
+
+          resetCursorIdleTimeout();
+        });
+
+        // Initial focus on avatar when page loads
+        setTimeout(() => {
+          focusOnAvatar();
+        }, 100); // Delay to ensure page is fully loaded
+      });
+
+      // Update the animatePlanets function to handle avatar focus
+      function animatePlanets() {
+        const avatarPos = updateAvatarPosition();
+
+        // If in avatar focus mode, target is avatar position
+        if (isAvatarFocused) {
+          targetX = avatarPos.x;
+          targetY = avatarPos.y;
+        }
+        // If cursor is not moving and not hovering avatar, use last cursor position
+        else if (!isCursorMoving && !isAvatarHovered && targetX) {
+          // Keep using the last target position
+        }
+
+        // If hovering avatar, target is avatar position
+        if (isAvatarHovered) {
+          targetX = avatarPos.x;
+          targetY = avatarPos.y;
+        }
+
+        // Calculate current orbit angle for rotation
+        const currentOrbitAngle = Date.now() * 0.001 * planetConfig.orbitSpeed;
+
+        // Get current orbit radius based on target
+        const currentOrbitRadius = getCurrentOrbitRadius();
+
+        planets.forEach((planet, index) => {
+          // Planets always orbit with equal spacing
+          if (!planet.isOrbiting) {
+            // Calculate new orbit position when transitioning from following
+            const angleToTarget = Math.atan2(
+              planet.y - targetY,
+              planet.x - targetX
+            );
+            planet.baseOrbitAngle =
+              angleToTarget +
+              planet.orbitIndex * ((2 * Math.PI) / planets.length);
+            planet.isOrbiting = true;
+          }
+
+          // Smoothly transition radius when changing targets
+          const targetRadius = getCurrentOrbitRadius();
+          const radiusDiff = targetRadius - planet.currentRadius;
+          planet.currentRadius +=
+            radiusDiff * planetConfig.orbitTransitionSpeed;
+
+          // Calculate equal orbit position with current radius
+          const orbitAngle = planet.baseOrbitAngle + currentOrbitAngle;
+          const orbitX = targetX + Math.cos(orbitAngle) * planet.currentRadius;
+          const orbitY = targetY + Math.sin(orbitAngle) * planet.currentRadius;
+
+          // Smooth transition to orbit position
+          const dx = orbitX - (planet.x + planet.size / 2);
+          const dy = orbitY - (planet.y + planet.size / 2);
+
+          planet.x += dx * 0.1;
+          planet.y += dy * 0.1;
+
+          // Apply new position
+          planet.element.style.left = `${planet.x}px`;
+          planet.element.style.top = `${planet.y}px`;
+        });
+
+        // Update connection lines
+        updateConnectionLines();
+
+        requestAnimationFrame(animatePlanets);
+      }
+
+      // Function to update target position
+      function updateTargetPosition(x, y) {
+        targetX = x;
+        targetY = y;
+        isCursorMoving = true;
+        lastCursorMoveTime = Date.now();
+
+        // Clear any existing timeout and set new one
+        clearTimeout(cursorStoppedTimeout);
+        cursorStoppedTimeout = setTimeout(() => {
+          isCursorMoving = false;
+        }, 1000); // Consider cursor stopped
+      }
+
+      // Function to update avatar position
+      function updateAvatarPosition() {
+        const avatar = document.querySelector(".avatar-container");
+        const rect = avatar.getBoundingClientRect();
+        return {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+        };
+      }
+
+      // Function to calculate equal orbit positions
+      function getEqualOrbitPositions(
+        centerX,
+        centerY,
+        radius,
+        planetCount,
+        baseAngle = 0
+      ) {
+        const positions = [];
+        const angleStep = (2 * Math.PI) / planetCount;
+
+        for (let i = 0; i < planetCount; i++) {
+          const angle = baseAngle + i * angleStep;
+          positions.push({
+            x: centerX + Math.cos(angle) * radius,
+            y: centerY + Math.sin(angle) * radius,
+          });
+        }
+
+        return positions;
+      }
+
+      // Function to get current orbit radius based on target
+      function getCurrentOrbitRadius() {
+        return isAvatarHovered ? avatarOrbitRadius : cursorOrbitRadius;
+      }
+
       // Create planets with responsive count
       function createPlanets() {
         // Clear existing planets
@@ -2174,51 +2472,94 @@
 
         // Determine number of planets based on screen width
         const isMobile = window.innerWidth <= 768;
-        const planetCount = isMobile ? 3 : 5; // Reduced from 10 to 5 on mobile
+        const planetCount = 5;
+
+        // Set initial target to avatar position
+        const avatarPos = updateAvatarPosition();
+        targetX = avatarPos.x;
+        targetY = avatarPos.y;
+
+        // Get equal orbit positions around avatar (using avatar radius)
+        const orbitPositions = getEqualOrbitPositions(
+          targetX,
+          targetY,
+          avatarOrbitRadius,
+          planetCount
+        );
+
+        // Define icons and fixed colors for each planet
+        const planetData = [
+          {
+            // HTML - Orange
+            icon: `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" />`,
+            color: "#E34F26", // HTML5 orange
+            gradient: ["#E34F26", "#F06529"], // Orange gradient
+          },
+          {
+            // CSS - Blue
+            icon: `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" />`,
+            color: "#1572B6", // CSS3 blue
+            gradient: ["#1572B6", "#33A9DC"], // Blue gradient
+          },
+          {
+            // JavaScript - Yellow
+            icon: `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />`,
+            color: "#F7DF1E", // JavaScript yellow
+            gradient: ["#F7DF1E", "#F0DB4F"], // Yellow gradient
+          },
+          {
+            // Firebase - Orange-Yellow
+            icon: `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" />`,
+            color: "#02569B", // Flutter blue
+            gradient: ["#02569B", "#027DFD"], // Light blue gradient
+          },
+          {
+            // Flutter - Light Blue
+            icon: `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" />`,
+            color: "#FFCA28", // Firebase yellow
+            gradient: ["#FFCA28", "#FFA000"], // Orange-yellow gradient
+          },
+        ];
 
         for (let i = 0; i < planetCount; i++) {
           const planet = document.createElement("div");
           planet.classList.add("planet");
 
-          // Vary planet sizes more for visual interest
-          const size = Math.random() * 80 + 20;
-
+          const size = 50;
           planet.style.width = `${size}px`;
           planet.style.height = `${size}px`;
-          planet.style.backgroundColor =
-            colors[Math.floor(Math.random() * colors.length)];
 
-          // Add some planets with radial gradients for more realistic appearance
-          if (Math.random() > 0.5) {
-            const color1 = colors[Math.floor(Math.random() * colors.length)];
-            const color2 = colors[Math.floor(Math.random() * colors.length)];
-            planet.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
-          }
+          // Use fixed color for this planet
+          const planetInfo = planetData[i];
+          planet.style.backgroundColor = planetInfo.color;
 
-          // Random starting position within screen bounds
-          const startX = Math.random() * (window.innerWidth - size);
-          const startY = Math.random() * (window.innerHeight - size);
+          // Add radial gradient for better visual effect
+          planet.style.background = `radial-gradient(circle at 30% 30%, ${planetInfo.gradient[0]}, ${planetInfo.gradient[1]})`;
 
-          planet.style.left = `${startX}px`;
-          planet.style.top = `${startY}px`;
+          // Start planets in equal orbit around avatar
+          const startPos = orbitPositions[i];
+          planet.style.left = `${startPos.x - size / 2}px`;
+          planet.style.top = `${startPos.y - size / 2}px`;
 
-          // Add subtle rotation animation to some planets
-          if (Math.random() > 0.7) {
-            planet.style.animation = `rotatePlanet ${
-              Math.random() * 20 + 10
-            }s linear infinite`;
-          }
+          // Create and add icon to the planet
+          const planetIcon = document.createElement("div");
+          planetIcon.classList.add("planet-icon");
+          planetIcon.innerHTML = planetInfo.icon;
+          planet.appendChild(planetIcon);
 
           spaceContainer.appendChild(planet);
 
           // Store planet data for animation
           planets.push({
             element: planet,
-            x: startX,
-            y: startY,
+            x: startPos.x - size / 2,
+            y: startPos.y - size / 2,
             size: size,
-            vx: (Math.random() * 2 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Horizontal velocity
-            vy: (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1), // Vertical velocity
+            orbitIndex: i,
+            isOrbiting: true,
+            baseOrbitAngle: ((2 * Math.PI) / planetCount) * i,
+            currentRadius: avatarOrbitRadius,
+            icon: planetIcon,
           });
         }
       }
@@ -2226,79 +2567,229 @@
       // Initial planet creation
       createPlanets();
 
+      // Create connection lines container
+      const planetConnections = document.createElement("div");
+      planetConnections.classList.add("planet-connections");
+      spaceContainer.appendChild(planetConnections);
+
+      // Function to create connection lines between planets
+      function createConnectionLines() {
+        // Clear existing connection lines
+        const existingLines =
+          planetConnections.querySelectorAll(".connection-line");
+        existingLines.forEach((line) => line.remove());
+
+        // Create lines connecting each planet to form a pentagon
+        for (let i = 0; i < planets.length; i++) {
+          const nextIndex = (i + 1) % planets.length;
+
+          const line = document.createElement("div");
+          line.classList.add("connection-line");
+          line.id = `connection-${i}-${nextIndex}`;
+          planetConnections.appendChild(line);
+        }
+      }
+
+      // Function to update connection lines positions
+      function updateConnectionLines() {
+        for (let i = 0; i < planets.length; i++) {
+          const nextIndex = (i + 1) % planets.length;
+          const line = document.getElementById(`connection-${i}-${nextIndex}`);
+
+          if (line && planets[i] && planets[nextIndex]) {
+            const planet1 = planets[i];
+            const planet2 = planets[nextIndex];
+
+            // Calculate center points of planets
+            const x1 = planet1.x + planet1.size / 2;
+            const y1 = planet1.y + planet1.size / 2;
+            const x2 = planet2.x + planet2.size / 2;
+            const y2 = planet2.y + planet2.size / 2;
+
+            // Calculate distance between planets
+            const distance = Math.sqrt(
+              Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)
+            );
+
+            // Calculate angle between planets
+            const angle = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI;
+
+            // Update line position and rotation
+            line.style.width = `${distance}px`;
+            line.style.left = `${x1}px`;
+            line.style.top = `${y1}px`;
+            line.style.transform = `rotate(${angle}deg)`;
+          }
+        }
+      }
+
+      // Function to show/hide planet icons and connection lines
+      function togglePlanetIconsAndLines(show) {
+        planets.forEach((planet) => {
+          if (planet.icon) {
+            planet.icon.style.opacity = show ? "1" : "0";
+          }
+        });
+
+        const connectionLines =
+          planetConnections.querySelectorAll(".connection-line");
+        connectionLines.forEach((line) => {
+          line.style.opacity = show ? "0.7" : "0";
+        });
+      }
+
       // Add CSS for planet rotation
       const style = document.createElement("style");
       style.textContent = `
-        @keyframes rotatePlanet {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `;
+  @keyframes rotatePlanet {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
       document.head.appendChild(style);
 
-      // Tambahkan variabel global untuk mengontrol kecepatan planet
-      let planetSpeedMultiplier = 1;
-      let isAvatarHovered = false;
+      // Mouse movement tracking
+      document.addEventListener("mousemove", (e) => {
+        updateTargetPosition(e.clientX, e.clientY);
+      });
 
-      // Fungsi untuk mempercepat planet
-      function speedUpPlanets() {
-        planetSpeedMultiplier = 10; // 10x lebih cepat
-        isAvatarHovered = true;
-      }
+      // Touch movement tracking for mobile
+      document.addEventListener(
+        "touchmove",
+        (e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          updateTargetPosition(touch.clientX, touch.clientY);
+        },
+        { passive: false }
+      );
 
-      // Fungsi untuk mengembalikan kecepatan normal planet
-      function slowDownPlanets() {
-        planetSpeedMultiplier = 1; // Kecepatan normal
-        isAvatarHovered = false;
-      }
+      // Avatar hover events
+      document.addEventListener("DOMContentLoaded", function () {
+        const avatarContainer = document.querySelector(".avatar-container");
+
+        avatarContainer.addEventListener("mouseenter", function () {
+          isAvatarHovered = true;
+          // Update target to avatar position when hovering
+          const avatarPos = updateAvatarPosition();
+          updateTargetPosition(avatarPos.x, avatarPos.y);
+
+          // Show planet icons and connection lines
+          togglePlanetIconsAndLines(true);
+        });
+
+        avatarContainer.addEventListener("mouseleave", function () {
+          isAvatarHovered = false;
+
+          // Hide planet icons and connection lines
+          togglePlanetIconsAndLines(false);
+        });
+
+        // Touch events for mobile avatar interaction
+        avatarContainer.addEventListener("touchstart", function () {
+          isAvatarHovered = true;
+          const avatarPos = updateAvatarPosition();
+          updateTargetPosition(avatarPos.x, avatarPos.y);
+
+          // Show planet icons and connection lines
+          togglePlanetIconsAndLines(true);
+        });
+
+        avatarContainer.addEventListener("touchend", function () {
+          isAvatarHovered = false;
+
+          // Hide planet icons and connection lines
+          togglePlanetIconsAndLines(false);
+        });
+      });
+
+      const planetConfig = {
+        orbitTransitionSpeed: 0.1, // Speed when transitioning to orbit
+        orbitSpeed: 0.4, // Base orbit speed
+        avatarOrbitRadius: window.innerWidth <= 768 ? 150 : 200,
+        cursorOrbitRadius: 100,
+      };
 
       // Animate planets using requestAnimationFrame
       function animatePlanets() {
-        planets.forEach((planet) => {
-          // Update position dengan multiplier kecepatan
-          planet.x += planet.vx * planetSpeedMultiplier;
-          planet.y += planet.vy * planetSpeedMultiplier;
+        const avatarPos = updateAvatarPosition();
 
-          // Check horizontal boundaries
-          if (planet.x <= 0) {
-            planet.x = 0;
-            planet.vx = Math.abs(planet.vx); // Bounce right
-          } else if (planet.x >= window.innerWidth - planet.size) {
-            planet.x = window.innerWidth - planet.size;
-            planet.vx = -Math.abs(planet.vx); // Bounce left
+        // If cursor is not moving and not hovering avatar, use last cursor position
+        if (!isCursorMoving && !isAvatarHovered && targetX) {
+          // Keep using the last target position
+        }
+
+        // If hovering avatar, target is avatar position
+        if (isAvatarHovered) {
+          targetX = avatarPos.x;
+          targetY = avatarPos.y;
+        }
+
+        // Calculate current orbit angle for rotation
+        const currentOrbitAngle = Date.now() * 0.001 * planetConfig.orbitSpeed;
+
+        // Get current orbit radius based on target
+        const currentOrbitRadius = getCurrentOrbitRadius();
+
+        planets.forEach((planet, index) => {
+          // Planets always orbit with equal spacing
+          if (!planet.isOrbiting) {
+            // Calculate new orbit position when transitioning from following
+            const angleToTarget = Math.atan2(
+              planet.y - targetY,
+              planet.x - targetX
+            );
+            planet.baseOrbitAngle =
+              angleToTarget +
+              planet.orbitIndex * ((2 * Math.PI) / planets.length);
+            planet.isOrbiting = true;
           }
 
-          // Check vertical boundaries
-          if (planet.y <= 0) {
-            planet.y = 0;
-            planet.vy = Math.abs(planet.vy); // Bounce down
-          } else if (planet.y >= window.innerHeight - planet.size) {
-            planet.y = window.innerHeight - planet.size;
-            planet.vy = -Math.abs(planet.vy); // Bounce up
-          }
+          // Smoothly transition radius when changing targets
+          const targetRadius = getCurrentOrbitRadius();
+          const radiusDiff = targetRadius - planet.currentRadius;
+          planet.currentRadius +=
+            radiusDiff * planetConfig.orbitTransitionSpeed;
+
+          // Calculate equal orbit position with current radius
+          const orbitAngle = planet.baseOrbitAngle + currentOrbitAngle;
+          const orbitX = targetX + Math.cos(orbitAngle) * planet.currentRadius;
+          const orbitY = targetY + Math.sin(orbitAngle) * planet.currentRadius;
+
+          // Smooth transition to orbit position
+          const dx = orbitX - (planet.x + planet.size / 2);
+          const dy = orbitY - (planet.y + planet.size / 2);
+
+          planet.x += dx * 0.1;
+          planet.y += dy * 0.1;
 
           // Apply new position
           planet.element.style.left = `${planet.x}px`;
           planet.element.style.top = `${planet.y}px`;
         });
 
+        // Update connection lines
+        updateConnectionLines();
+
         requestAnimationFrame(animatePlanets);
       }
+
+      // Create connection lines initially
+      createConnectionLines();
 
       // Start animation
       animatePlanets();
 
       // Update planet positions on window resize
       window.addEventListener("resize", () => {
-        planets.forEach((planet) => {
-          // Ensure planets stay within new screen boundaries
-          if (planet.x > window.innerWidth - planet.size) {
-            planet.x = window.innerWidth - planet.size;
-          }
-          if (planet.y > window.innerHeight - planet.size) {
-            planet.y = window.innerHeight - planet.size;
-          }
-        });
+        const avatarPos = updateAvatarPosition();
+        if (isAvatarHovered) {
+          targetX = avatarPos.x;
+          targetY = avatarPos.y;
+        }
+
+        // Recreate connection lines on resize
+        createConnectionLines();
       });
 
       // PROGRESS BAR ANIMATION FUNCTIONALITY
@@ -2586,13 +3077,6 @@
       // Initialize scroll animations when page loads
       window.addEventListener("load", initScrollAnimations);
 
-      // Tambahkan event listener untuk avatar
-      document.addEventListener("DOMContentLoaded", function () {
-        const avatarContainer = document.querySelector(".avatar-container");
-
-        avatarContainer.addEventListener("mouseenter", speedUpPlanets);
-        avatarContainer.addEventListener("mouseleave", slowDownPlanets);
-      });
       // Footer functionality
       document.addEventListener("DOMContentLoaded", function () {
         // Smooth scrolling for footer links
