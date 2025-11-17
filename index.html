@@ -870,14 +870,14 @@
       }
 
       .project-info {
+        height: 100%;
         padding: 20px;
+        background: rgba(10, 15, 40, 0.7);
       }
 
       .project-info h3 {
         color: #ffcc00;
         margin-bottom: 10px;
-        text-shadow: 0 0 10px rgba(255, 108, 199, 0.5);
-        animation: title-pulse-yellow 3s ease-in-out infinite;
       }
 
       /* Achievements Section */
@@ -958,7 +958,7 @@
         padding: 20px;
         background: rgba(26, 26, 74, 0.7);
         backdrop-filter: blur(10px);
-        border: 3px solid #ff6ec7;
+        border: 1px solid #ff6ec7;
         border-radius: 10px;
         max-width: 600px;
         width: 100%;
@@ -2090,9 +2090,9 @@
 
         // Determine number of graph lines based on screen width
         const isMobile = window.innerWidth <= 768;
-        const lineCount = isMobile ? 30 : 50; // Reduced from 100 to 30 on mobile
+        const lineCount = isMobile ? 30 : 50; // Reduced from 50 to 30 on mobile
 
-        for (let i = 0; i < 0; i++) {
+        for (let i = 0; i < lineCount; i++) {
           const graphLine = document.createElement("div");
           graphLine.classList.add("graph-line");
 
@@ -2170,9 +2170,9 @@
 
         // Determine number of planets based on screen width
         const isMobile = window.innerWidth <= 768;
-        const planetCount = isMobile ? 3 : 10; // Reduced from 10 to 5 on mobile
+        const planetCount = isMobile ? 3 : 5; // Reduced from 10 to 5 on mobile
 
-        for (let i = 0; i < 0; i++) {
+        for (let i = 0; i < planetCount; i++) {
           const planet = document.createElement("div");
           planet.classList.add("planet");
 
