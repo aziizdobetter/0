@@ -2254,122 +2254,92 @@
         }, 3000);
       }
 
-      // Modified mouse movement tracking
-      document.addEventListener("mousemove", (e) => {
-        // When cursor moves, switch from avatar focus to cursor following
-        if (isAvatarFocused) {
-          isAvatarFocused = false;
-          isAvatarHovered = false;
-          togglePlanetIconsAndLines(false);
-        }
-
-        updateTargetPosition(e.clientX, e.clientY);
-        resetCursorIdleTimeout();
-      });
-
-      // Improved touch handling that allows scrolling
-      let lastTouchY = 0;
-      let isScrolling = false;
-
-      document.addEventListener(
-        "touchstart",
-        (e) => {
-          lastTouchY = e.touches[0].clientY;
-          isScrolling = false;
-        },
-        { passive: true }
-      );
-
-      document.addEventListener(
-        "touchmove",
-        (e) => {
-          const touchY = e.touches[0].clientY;
-          const deltaY = Math.abs(touchY - lastTouchY);
-
-          // Detect if user is trying to scroll (vertical movement)
-          if (deltaY > 5) {
-            isScrolling = true;
-            return; // Allow default scroll behavior
+      // Modified mouse movement tracking - DISABLED ON MOBILE
+      if (!isMobile) {
+        document.addEventListener("mousemove", (e) => {
+          // When cursor moves, switch from avatar focus to cursor following
+          if (isAvatarFocused) {
+            isAvatarFocused = false;
+            isAvatarHovered = false;
+            togglePlanetIconsAndLines(false);
           }
 
-          // Only handle planet movement for small movements (likely intentional)
-          if (!isScrolling && deltaY <= 5) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            updateTargetPosition(touch.clientX, touch.clientY);
+          updateTargetPosition(e.clientX, e.clientY);
+          resetCursorIdleTimeout();
+        });
 
-            // Switch from avatar focus to cursor following
+        // Modified touch movement tracking for mobile - DISABLED ON MOBILE
+        document.addEventListener(
+          "touchmove",
+          (e) => {
+            e.preventDefault();
+
+            // When touch moves, switch from avatar focus to cursor following
             if (isAvatarFocused) {
               isAvatarFocused = false;
               isAvatarHovered = false;
               togglePlanetIconsAndLines(false);
             }
 
+            const touch = e.touches[0];
+            updateTargetPosition(touch.clientX, touch.clientY);
             resetCursorIdleTimeout();
-          }
+          },
+          { passive: false }
+        );
+      }
 
-          lastTouchY = touchY;
-        },
-        { passive: false }
-      );
-
-      document.addEventListener(
-        "touchend",
-        () => {
-          isScrolling = false;
-        },
-        { passive: true }
-      );
-
-      // Modified avatar hover events
+      // Modified avatar hover events - DISABLED ON MOBILE
       document.addEventListener("DOMContentLoaded", function () {
         const avatarContainer = document.querySelector(".avatar-container");
 
-        avatarContainer.addEventListener("mouseenter", function () {
-          isAvatarHovered = true;
-          // Update target to avatar position when hovering
-          const avatarPos = updateAvatarPosition();
-          updateTargetPosition(avatarPos.x, avatarPos.y);
+        if (!isMobile) {
+          avatarContainer.addEventListener("mouseenter", function () {
+            isAvatarHovered = true;
+            // Update target to avatar position when hovering
+            const avatarPos = updateAvatarPosition();
+            updateTargetPosition(avatarPos.x, avatarPos.y);
 
-          // Show planet icons and connection lines
-          togglePlanetIconsAndLines(true);
+            // Show planet icons and connection lines
+            togglePlanetIconsAndLines(true);
 
-          resetCursorIdleTimeout();
-        });
+            resetCursorIdleTimeout();
+          });
 
-        avatarContainer.addEventListener("mouseleave", function () {
-          isAvatarHovered = false;
+          avatarContainer.addEventListener("mouseleave", function () {
+            isAvatarHovered = false;
 
-          // Only hide planet icons if not in avatar focus mode
-          if (!isAvatarFocused) {
-            togglePlanetIconsAndLines(false);
-          }
+            // Only hide planet icons if not in avatar focus mode
+            if (!isAvatarFocused) {
+              togglePlanetIconsAndLines(false);
+            }
 
-          resetCursorIdleTimeout();
-        });
+            resetCursorIdleTimeout();
+          });
 
-        // Touch events for mobile avatar interaction
-        avatarContainer.addEventListener("touchstart", function () {
-          isAvatarHovered = true;
-          const avatarPos = updateAvatarPosition();
-          updateTargetPosition(avatarPos.x, avatarPos.y);
+          // Touch events for mobile avatar interaction
+          avatarContainer.addEventListener("touchstart", function () {
+            isAvatarHovered = true;
+            const avatarPos = updateAvatarPosition();
+            updateTargetPosition(avatarPos.x, avatarPos.y);
 
-          // Show planet icons and connection lines
-          togglePlanetIconsAndLines(true);
+            // Show planet icons and connection lines
+            togglePlanetIconsAndLines(true);
 
-          resetCursorIdleTimeout();
-        });
+            resetCursorIdleTimeout();
+          });
 
-        avatarContainer.addEventListener("touchend", function () {
-          isAvatarHovered = false;
+          avatarContainer.addEventListener("touchend", function () {
+            isAvatarHovered = false;
 
-          // Only hide planet icons if not in avatar focus mode
-          if (!isAvatarFocused) {
-            togglePlanetIconsAndLines(false);
-          }
+            // Only hide planet icons if not in avatar focus mode
+            if (!isAvatarFocused) {
+              togglePlanetIconsAndLines(false);
+            }
 
-          resetCursorIdleTimeout();
-        });
+            resetCursorIdleTimeout();
+          });
+        }
 
         // Initial focus on avatar when page loads
         setTimeout(() => {
@@ -2682,60 +2652,62 @@
 `;
       document.head.appendChild(style);
 
-      // Mouse movement tracking
-      document.addEventListener("mousemove", (e) => {
-        updateTargetPosition(e.clientX, e.clientY);
-      });
-
-      // Touch movement tracking for mobile
-      document.addEventListener(
-        "touchmove",
-        (e) => {
-          e.preventDefault();
-          const touch = e.touches[0];
-          updateTargetPosition(touch.clientX, touch.clientY);
-        },
-        { passive: false }
-      );
-
-      // Avatar hover events
-      document.addEventListener("DOMContentLoaded", function () {
-        const avatarContainer = document.querySelector(".avatar-container");
-
-        avatarContainer.addEventListener("mouseenter", function () {
-          isAvatarHovered = true;
-          // Update target to avatar position when hovering
-          const avatarPos = updateAvatarPosition();
-          updateTargetPosition(avatarPos.x, avatarPos.y);
-
-          // Show planet icons and connection lines
-          togglePlanetIconsAndLines(true);
+      // Mouse movement tracking - DISABLED ON MOBILE
+      if (!isMobile) {
+        document.addEventListener("mousemove", (e) => {
+          updateTargetPosition(e.clientX, e.clientY);
         });
 
-        avatarContainer.addEventListener("mouseleave", function () {
-          isAvatarHovered = false;
+        // Touch movement tracking for mobile - DISABLED ON MOBILE
+        document.addEventListener(
+          "touchmove",
+          (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            updateTargetPosition(touch.clientX, touch.clientY);
+          },
+          { passive: false }
+        );
 
-          // Hide planet icons and connection lines
-          togglePlanetIconsAndLines(false);
+        // Avatar hover events - DISABLED ON MOBILE
+        document.addEventListener("DOMContentLoaded", function () {
+          const avatarContainer = document.querySelector(".avatar-container");
+
+          avatarContainer.addEventListener("mouseenter", function () {
+            isAvatarHovered = true;
+            // Update target to avatar position when hovering
+            const avatarPos = updateAvatarPosition();
+            updateTargetPosition(avatarPos.x, avatarPos.y);
+
+            // Show planet icons and connection lines
+            togglePlanetIconsAndLines(true);
+          });
+
+          avatarContainer.addEventListener("mouseleave", function () {
+            isAvatarHovered = false;
+
+            // Hide planet icons and connection lines
+            togglePlanetIconsAndLines(false);
+          });
+
+          // Touch events for mobile avatar interaction
+          avatarContainer.addEventListener("touchstart", function () {
+            isAvatarHovered = true;
+            const avatarPos = updateAvatarPosition();
+            updateTargetPosition(avatarPos.x, avatarPos.y);
+
+            // Show planet icons and connection lines
+            togglePlanetIconsAndLines(true);
+          });
+
+          avatarContainer.addEventListener("touchend", function () {
+            isAvatarHovered = false;
+
+            // Hide planet icons and connection lines
+            togglePlanetIconsAndLines(false);
+          });
         });
-
-        // Touch events for mobile avatar interaction
-        avatarContainer.addEventListener("touchstart", function () {
-          isAvatarHovered = true;
-          const avatarPos = updateAvatarPosition();
-          updateTargetPosition(avatarPos.x, avatarPos.y);
-
-          // Show planet icons and connection lines
-          togglePlanetIconsAndLines(true);
-        });
-
-        avatarContainer.addEventListener("touchend", function () {
-          isAvatarHovered = false;
-
-          // Hide planet icons and connection lines
-          togglePlanetIconsAndLines(false);
-        });
-      });
+      }
 
       const planetConfig = {
         orbitTransitionSpeed: 0.1, // Speed when transitioning to orbit
