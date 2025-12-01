@@ -770,16 +770,19 @@
       }
 
       .timeline-item:nth-child(odd) {
-        left: 0;
+        left: 50%;
       }
 
       .timeline-item:nth-child(even) {
-        left: 50%;
-        transform: translateX(50px);
+        left: 0;
+      }
+
+      section.visible .timeline-item:nth-child(odd) {
+        left: 0;
       }
 
       section.visible .timeline-item:nth-child(even) {
-        transform: translateX(0);
+        left: 50%;
       }
 
       .timeline-content {
@@ -1168,7 +1171,7 @@
       .connection-line {
         position: absolute;
         height: 2px;
-        background: linear-gradient(to right, #6efafd, #ff6ec7);
+        background: #6efafd;
         transform-origin: 0 0;
         opacity: 0;
         transition: opacity 0.5s ease;
@@ -3129,4 +3132,3 @@
     </script>
   </body>
 </html>
-
